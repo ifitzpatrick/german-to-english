@@ -22,7 +22,7 @@
     "gulp-coffee":   "1.4.x",
     "gulp-concat":   "2.1.x",
     "coffee-script": "1.7.x",
-    "event-stream":  "3.1.x"
+    "streamqueue":   "0.0.x"
   },
   "author": "whalesofthesky",
   "license": "BSD"

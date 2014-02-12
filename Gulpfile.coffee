@@ -1,10 +1,10 @@
-gulp   = require "gulp"
-coffee = require "gulp-coffee"
-concat = require "gulp-concat"
-es     = require "event-stream"
+gulp        = require "gulp"
+coffee      = require "gulp-coffee"
+concat      = require "gulp-concat"
+streamqueue = require "streamqueue"
 
 gulp.task "default", ->
-  es.concat(
+  streamqueue({objectMode: true},
     gulp.src(["header.js"]),
     gulp.src(["src/*.coffee"])
       .pipe(coffee())

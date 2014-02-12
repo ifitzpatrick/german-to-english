@@ -1,5 +1,5 @@
 $ = (selector) ->
-      return document.querySelectorAll(selector);
+  document.querySelectorAll selector
 
 currentPopover = null
 

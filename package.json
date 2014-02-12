@@ -1,0 +1,29 @@
+{
+  "name": "per-definitionem",
+  "version": "0.0.1",
+  "description": "German-english dictionary userscript",
+  "main": "german-dictionary.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:ifizpatrick/userscripts.git"
+  },
+  "keywords": [
+    "german",
+    "english",
+    "dictionary",
+    "userscript",
+    "tampermonkey"
+  ],
+  "dependencies": {
+    "gulp":          "3.5.x",
+    "gulp-coffee":   "1.4.x",
+    "gulp-concat":   "2.1.x",
+    "coffee-script": "1.7.x",
+    "event-stream":  "3.1.x"
+  },
+  "author": "whalesofthesky",
+  "license": "LOL"
+}

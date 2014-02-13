@@ -17,12 +17,14 @@
     "userscript",
     "tampermonkey"
   ],
-  "dependencies": {
-    "gulp":          "3.5.x",
-    "gulp-coffee":   "1.4.x",
-    "gulp-concat":   "2.1.x",
-    "coffee-script": "1.7.x",
-    "streamqueue":   "0.0.x"
+  "dependencies":      {
+    "gulp":            "3.5.x",
+    "gulp-coffee":     "1.4.x",
+    "gulp-concat":     "2.1.x",
+    "gulp-browserify": "0.4.x",
+    "coffeeify":       "0.6.x",
+    "coffee-script":   "1.7.x",
+    "streamqueue":     "0.0.x"
   },
   "author": "whalesofthesky",
   "license": "BSD"

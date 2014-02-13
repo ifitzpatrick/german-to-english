@@ -51,8 +51,7 @@ document.addEventListener("keydown", function(event) {
 
 
 },{"./popover":3}],3:[function(require,module,exports){
-var $, build, dataTree, element, nodeToJSON, request,
-  __hasProp = {}.hasOwnProperty;
+var $, build, element, request, xmlToJson;
 
 $ = require("./query");
 
@@ -60,45 +59,7 @@ element = require("./element");
 
 request = require("./request");
 
-nodeToJSON = function(dom, nodeSpec, tree) {
-  var attrName, childNodeSpec, ele, key, node, nodes;
-  if (tree == null) {
-    tree = {};
-  }
-  tree[nodeSpec.name] = nodes = (function() {
-    var _i, _j, _len, _len1, _ref, _ref1, _ref2, _results;
-    _ref = dom.querySelectorAll(nodeSpec.selector);
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      ele = _ref[_i];
-      node = {};
-      _ref1 = nodeSpec.attrs || {};
-      for (key in _ref1) {
-        if (!__hasProp.call(_ref1, key)) continue;
-        attrName = _ref1[key];
-        node[key] = ele.getAttribute(attrName);
-      }
-      if (nodeSpec.text) {
-        node["text"] = ele.textContent;
-      }
-      _ref2 = nodeSpec.children || [];
-      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
-        childNodeSpec = _ref2[_j];
-        nodeToJSON(ele, childNodeSpec, node);
-      }
-      _results.push(node);
-    }
-    return _results;
-  })();
-  return tree;
-};
-
-dataTree = function(xml, spec) {
-  var dom, parser;
-  parser = new DOMParser;
-  dom = parser.parseFromString(xml, "application/xml");
-  return nodeToJSON(dom, spec);
-};
+xmlToJson = require("./xml_to_json.coffee");
 
 build = function(tree) {
   var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
@@ -175,7 +136,7 @@ module.exports = {
             }
           ]
         };
-        tree = dataTree(body, spec);
+        tree = xmlToJson(body, spec);
         div.innerHTML = "";
         return div.appendChild(build(tree));
       } catch (_error) {
@@ -204,7 +165,7 @@ module.exports = {
 };
 
 
-},{"./element":1,"./query":4,"./request":5}],4:[function(require,module,exports){
+},{"./element":1,"./query":4,"./request":5,"./xml_to_json.coffee":6}],4:[function(require,module,exports){
 module.exports = function(selector) {
   return document.querySelectorAll(selector);
 };
@@ -224,6 +185,51 @@ module.exports = function(url) {
       }
     });
   });
+};
+
+
+},{}],6:[function(require,module,exports){
+var nodeToJSON,
+  __hasProp = {}.hasOwnProperty;
+
+nodeToJSON = function(dom, nodeSpec, tree) {
+  var attrName, childNodeSpec, ele, key, node, nodes;
+  if (tree == null) {
+    tree = {};
+  }
+  tree[nodeSpec.name] = nodes = (function() {
+    var _i, _j, _len, _len1, _ref, _ref1, _ref2, _results;
+    _ref = dom.querySelectorAll(nodeSpec.selector);
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      ele = _ref[_i];
+      node = {};
+      _ref1 = nodeSpec.attrs || {};
+      for (key in _ref1) {
+        if (!__hasProp.call(_ref1, key)) continue;
+        attrName = _ref1[key];
+        node[key] = ele.getAttribute(attrName);
+      }
+      if (nodeSpec.text) {
+        node["text"] = ele.textContent;
+      }
+      _ref2 = nodeSpec.children || [];
+      for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+        childNodeSpec = _ref2[_j];
+        nodeToJSON(ele, childNodeSpec, node);
+      }
+      _results.push(node);
+    }
+    return _results;
+  })();
+  return tree;
+};
+
+module.exports = function(xml, spec) {
+  var dom, parser;
+  parser = new DOMParser;
+  dom = parser.parseFromString(xml, "application/xml");
+  return nodeToJSON(dom, spec);
 };
 
 

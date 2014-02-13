@@ -61,33 +61,29 @@ module.exports =
     @replace div
 
     request(url).then (res) ->
-      try
-        body = res.responseText
-        spec =
-          name: "sections"
-          selector: "section"
-          attrs:
-            name: "sctTitle"
+      xml = res.responseText
+      spec =
+        name: "sections"
+        selector: "section"
+        attrs:
+          name: "sctTitle"
 
+        children: [
+          name: "definitions"
+          selector: "entry"
           children: [
-            name: "definitions"
-            selector: "entry"
-            children: [
-              name: "langs"
-              selector: "side"
-              attrs:
-                lang: "lang"
+            name: "langs"
+            selector: "side"
+            attrs:
+              lang: "lang"
 
-              text: true
-            ]
+            text: true
           ]
+        ]
 
-        tree = xmlToJson body, spec
-        div.innerHTML = ""
-        div.appendChild build search, tree
-
-      catch e
-        debugger
+      tree = xmlToJson xml, spec
+      div.innerHTML = ""
+      div.appendChild build(search, tree)
 
     , ->
       div.innerText = "ERROR"

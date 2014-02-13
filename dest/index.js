@@ -117,39 +117,34 @@ module.exports = {
     div.innerText = "LOADING...";
     this.replace(div);
     return request(url).then(function(res) {
-      var body, e, spec, tree;
-      try {
-        body = res.responseText;
-        spec = {
-          name: "sections",
-          selector: "section",
-          attrs: {
-            name: "sctTitle"
-          },
-          children: [
-            {
-              name: "definitions",
-              selector: "entry",
-              children: [
-                {
-                  name: "langs",
-                  selector: "side",
-                  attrs: {
-                    lang: "lang"
-                  },
-                  text: true
-                }
-              ]
-            }
-          ]
-        };
-        tree = xmlToJson(body, spec);
-        div.innerHTML = "";
-        return div.appendChild(build(search, tree));
-      } catch (_error) {
-        e = _error;
-        debugger;
-      }
+      var spec, tree, xml;
+      xml = res.responseText;
+      spec = {
+        name: "sections",
+        selector: "section",
+        attrs: {
+          name: "sctTitle"
+        },
+        children: [
+          {
+            name: "definitions",
+            selector: "entry",
+            children: [
+              {
+                name: "langs",
+                selector: "side",
+                attrs: {
+                  lang: "lang"
+                },
+                text: true
+              }
+            ]
+          }
+        ]
+      };
+      tree = xmlToJson(xml, spec);
+      div.innerHTML = "";
+      return div.appendChild(build(search, tree));
     }, function() {
       return div.innerText = "ERROR";
     });

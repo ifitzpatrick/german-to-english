@@ -24,6 +24,31 @@ dataTree = (xml, spec) ->
   dom = parser.parseFromString xml, "application/xml"
   nodeToJSON dom, spec
 
+build = (tree) ->
+  base = element.create "div"
+
+  for section in tree.sections
+    sectionDiv = element.create "div"
+    base.appendChild sectionDiv
+
+    sectionTitle           = element.create "h1"
+    sectionTitle.innerText = section.name
+
+    sectionDiv.appendChild sectionTitle
+
+    defTable = element.create "table"
+    sectionDiv.appendChild defTable
+
+    for definition in section.definitions
+      defRow = element.create "tr"
+      defTable.appendChild defRow
+      for lang in definition.langs
+        cell = element.create "td"
+        cell.innerText = lang.text
+        defRow.appendChild cell
+
+  return base
+
 module.exports =
   create: (x, y, search) ->
     width  = 600
@@ -43,6 +68,7 @@ module.exports =
 
     div.innerText = "LOADING..."
     @replace div
+
     request(url).then (res) ->
       try
         body = res.responseText
@@ -50,7 +76,7 @@ module.exports =
           name: "sections"
           selector: "section"
           attrs:
-            sectionName: "sctTitle"
+            name: "sctTitle"
 
           children: [
             name: "definitions"
@@ -65,9 +91,8 @@ module.exports =
             ]
           ]
         tree = dataTree body, spec
-        text = JSON.stringify tree, null, 4
-        div.innerHtml = ""
-        div.innerText = text
+        div.innerHTML = ""
+        div.appendChild build tree
 
       catch e
         debugger

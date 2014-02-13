@@ -3,7 +3,7 @@ popover = require "./popover"
 document.addEventListener "keydown", (event) ->
   selection = document.getSelection()
 
-  if event.which is 68 and event.ctrlKey and selection
+  if event.which is 71 and event.altKey and selection
     node = selection.anchorNode.parentElement
     text = selection.toString()
     x    = node.offsetLeft + node.offsetWidth

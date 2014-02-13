@@ -38,7 +38,7 @@ popover = require("./popover");
 document.addEventListener("keydown", function(event) {
   var node, selection, text, x, y;
   selection = document.getSelection();
-  if (event.which === 68 && event.ctrlKey && selection) {
+  if (event.which === 71 && event.altKey && selection) {
     node = selection.anchorNode.parentElement;
     text = selection.toString();
     x = node.offsetLeft + node.offsetWidth;
@@ -51,7 +51,7 @@ document.addEventListener("keydown", function(event) {
 
 
 },{"./popover":3}],3:[function(require,module,exports){
-var $, dataTree, element, nodeToJSON, request,
+var $, build, dataTree, element, nodeToJSON, request,
   __hasProp = {}.hasOwnProperty;
 
 $ = require("./query");
@@ -100,6 +100,36 @@ dataTree = function(xml, spec) {
   return nodeToJSON(dom, spec);
 };
 
+build = function(tree) {
+  var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+  base = element.create("div");
+  _ref = tree.sections;
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    section = _ref[_i];
+    sectionDiv = element.create("div");
+    base.appendChild(sectionDiv);
+    sectionTitle = element.create("h1");
+    sectionTitle.innerText = section.name;
+    sectionDiv.appendChild(sectionTitle);
+    defTable = element.create("table");
+    sectionDiv.appendChild(defTable);
+    _ref1 = section.definitions;
+    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+      definition = _ref1[_j];
+      defRow = element.create("tr");
+      defTable.appendChild(defRow);
+      _ref2 = definition.langs;
+      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+        lang = _ref2[_k];
+        cell = element.create("td");
+        cell.innerText = lang.text;
+        defRow.appendChild(cell);
+      }
+    }
+  }
+  return base;
+};
+
 module.exports = {
   create: function(x, y, search) {
     var div, height, url, width;
@@ -119,14 +149,14 @@ module.exports = {
     div.innerText = "LOADING...";
     this.replace(div);
     return request(url).then(function(res) {
-      var body, e, spec, text, tree;
+      var body, e, spec, tree;
       try {
         body = res.responseText;
         spec = {
           name: "sections",
           selector: "section",
           attrs: {
-            sectionName: "sctTitle"
+            name: "sctTitle"
           },
           children: [
             {
@@ -146,9 +176,8 @@ module.exports = {
           ]
         };
         tree = dataTree(body, spec);
-        text = JSON.stringify(tree, null, 4);
-        div.innerHtml = "";
-        return div.innerText = text;
+        div.innerHTML = "";
+        return div.appendChild(build(tree));
       } catch (_error) {
         e = _error;
         debugger;

@@ -50,7 +50,7 @@ module.exports =
       background:   "#73afb6"
       color:        "#eefcff"
       overflowY:    "auto"
-      zIndex:       999
+      zIndex:       9999
       border:       "solid #2b2301 2px"
       borderRadius: "20px"
 

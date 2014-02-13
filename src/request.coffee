@@ -1,12 +1,12 @@
 module.exports = (url) ->
   new Promise (resolve, reject) ->
-    GM_xmlhttpRequest
-      method: "GET"
-      url: url
-      onload: (res) ->
-        resolve res
+    xhr = new XMLHttpRequest()
+    xhr.open("GET", url, true)
+    xhr.onload = ->
+      resolve xhr
 
-      onerror: (error) ->
-        reject error
+    xhr.onerror = (error) ->
+      reject error
 
+    xhr.send()
 

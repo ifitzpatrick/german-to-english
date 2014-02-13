@@ -1,18 +1,3 @@
-// ==UserScript==
-// @name       german-dictionary
-// @namespace  http://use.i.E.your.homepage/
-// @version    0.1
-// @description  enter something useful
-// @match      http://tampermonkey.net/index.php?version=3.6.3737.80&ext=dhdg&updated=true
-// @copyright  2012+, You
-// @include    http://www.dw.de/*
-// @include    http://www.spiegel.de
-// @include    http://www.spiegel.de/*
-// @include    http://www.sueddeutsche.de
-// @include    http://www.sueddeutsche.de/*
-// ==/UserScript==
-
-
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var __hasProp = {}.hasOwnProperty;
 
@@ -109,7 +94,7 @@ module.exports = {
       background: "#73afb6",
       color: "#eefcff",
       overflowY: "auto",
-      zIndex: 999,
+      zIndex: 9999,
       border: "solid #2b2301 2px",
       borderRadius: "20px"
     });
@@ -176,16 +161,16 @@ module.exports = function(selector) {
 },{}],5:[function(require,module,exports){
 module.exports = function(url) {
   return new Promise(function(resolve, reject) {
-    return GM_xmlhttpRequest({
-      method: "GET",
-      url: url,
-      onload: function(res) {
-        return resolve(res);
-      },
-      onerror: function(error) {
-        return reject(error);
-      }
-    });
+    var xhr;
+    xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onload = function() {
+      return resolve(xhr);
+    };
+    xhr.onerror = function(error) {
+      return reject(error);
+    };
+    return xhr.send();
   });
 };
 

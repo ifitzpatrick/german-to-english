@@ -1,1 +1,3 @@
-Install with tampermonkey, select a word with your mouse, and press alt-g to open the dictionary
+Chrome extension to lookup words in german english dictionary.
+To use, install the plugin, then highlight a word and press alt-g.
+To close the popover, pres esc.

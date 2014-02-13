@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+
+  "name": "per-definitionem",
+  "description": "German english dictionary",
+  "version": "0.0",
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["dest/index.js"]
+  }],
+  "permissions": ["webRequest"]
+}

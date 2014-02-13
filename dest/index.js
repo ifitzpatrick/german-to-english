@@ -61,15 +61,18 @@ request = require("./request");
 
 xmlToJson = require("./xml_to_json.coffee");
 
-build = function(tree) {
-  var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+build = function(search, tree) {
+  var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
   base = element.create("div");
+  title = element.create("h1");
+  title.innerText = search;
+  base.appendChild(title);
   _ref = tree.sections;
   for (_i = 0, _len = _ref.length; _i < _len; _i++) {
     section = _ref[_i];
     sectionDiv = element.create("div");
     base.appendChild(sectionDiv);
-    sectionTitle = element.create("h1");
+    sectionTitle = element.create("h2");
     sectionTitle.innerText = section.name;
     sectionDiv.appendChild(sectionTitle);
     defTable = element.create("table");
@@ -138,7 +141,7 @@ module.exports = {
         };
         tree = xmlToJson(body, spec);
         div.innerHTML = "";
-        return div.appendChild(build(tree));
+        return div.appendChild(build(search, tree));
       } catch (_error) {
         e = _error;
         debugger;

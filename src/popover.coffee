@@ -3,14 +3,19 @@ element   = require "./element"
 request   = require "./request"
 xmlToJson = require "./xml_to_json.coffee"
 
-build = (tree) ->
+build = (search, tree) ->
   base = element.create "div"
+
+  title = element.create "h1"
+  title.innerText = search
+
+  base.appendChild title
 
   for section in tree.sections
     sectionDiv = element.create "div"
     base.appendChild sectionDiv
 
-    sectionTitle           = element.create "h1"
+    sectionTitle           = element.create "h2"
     sectionTitle.innerText = section.name
 
     sectionDiv.appendChild sectionTitle
@@ -72,7 +77,7 @@ module.exports =
 
         tree = xmlToJson body, spec
         div.innerHTML = ""
-        div.appendChild build tree
+        div.appendChild build search, tree
 
       catch e
         debugger

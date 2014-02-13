@@ -4,7 +4,9 @@ request   = require "./request"
 xmlToJson = require "./xml_to_json.coffee"
 
 build = (search, tree) ->
-  base = element.create "div"
+  base = element.create "div",
+    fontFamily: "Helvetica"
+    padding:    "20px"
 
   title = element.create "h1"
   title.innerText = search
@@ -34,18 +36,23 @@ build = (search, tree) ->
   return base
 
 module.exports =
-  create: (x, y, search) ->
+  create: (search) ->
     width  = 600
     height = 800
     div    = element.create "div",
-      width:      width + "px"
-      height:     height + "px"
-      position:   "absolute"
-      left:       x.toString() + "px"
-      top:        y.toString() + "px"
-      background: "white"
-      overflowY:  "auto"
-      zIndex:     999
+      #width:        width + "px"
+      #height:       height + "px"
+      position:     "fixed"
+      left:         "100px"
+      top:          "100px"
+      bottom:       "100px"
+      right:        "100px"
+      background:   "#73afb6"
+      color:        "#eefcff"
+      overflowY:    "auto"
+      zIndex:       999
+      border:       "solid #2b2301 2px"
+      borderRadius: "20px"
 
     url  =
       "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"

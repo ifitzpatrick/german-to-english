@@ -36,14 +36,12 @@ var popover;
 popover = require("./popover");
 
 document.addEventListener("keydown", function(event) {
-  var node, selection, text, x, y;
+  var node, selection, text;
   selection = document.getSelection();
   if (event.which === 71 && event.altKey && selection) {
     node = selection.anchorNode.parentElement;
     text = selection.toString();
-    x = node.offsetLeft + node.offsetWidth;
-    y = node.offsetTop;
-    return popover.create(x, y, text);
+    return popover.create(text);
   } else if (event.which === 27) {
     return popover.replace();
   }
@@ -63,7 +61,10 @@ xmlToJson = require("./xml_to_json.coffee");
 
 build = function(search, tree) {
   var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-  base = element.create("div");
+  base = element.create("div", {
+    fontFamily: "Helvetica",
+    padding: "20px"
+  });
   title = element.create("h1");
   title.innerText = search;
   base.appendChild(title);
@@ -95,19 +96,22 @@ build = function(search, tree) {
 };
 
 module.exports = {
-  create: function(x, y, search) {
+  create: function(search) {
     var div, height, url, width;
     width = 600;
     height = 800;
     div = element.create("div", {
-      width: width + "px",
-      height: height + "px",
-      position: "absolute",
-      left: x.toString() + "px",
-      top: y.toString() + "px",
-      background: "white",
+      position: "fixed",
+      left: "100px",
+      top: "100px",
+      bottom: "100px",
+      right: "100px",
+      background: "#73afb6",
+      color: "#eefcff",
       overflowY: "auto",
-      zIndex: 999
+      zIndex: 999,
+      border: "solid #2b2301 2px",
+      borderRadius: "20px"
     });
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
     div.innerText = "LOADING...";

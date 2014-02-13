@@ -1,5 +1,4 @@
 gulp        = require "gulp"
-coffee      = require "gulp-coffee"
 concat      = require "gulp-concat"
 browserify  = require "gulp-browserify"
 streamqueue = require "streamqueue"

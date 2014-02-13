@@ -113,7 +113,10 @@
       height: height + "px",
       position: "absolute",
       left: x.toString() + "px",
-      top: y.toString() + "px"
+      top: y.toString() + "px",
+      background: "white",
+      overflowY: "auto",
+      zIndex: 999
     });
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
     div.innerText = "LOADING...";

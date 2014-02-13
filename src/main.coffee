@@ -57,11 +57,14 @@ popover = (x, y, search) ->
   width  = 600
   height = 800
   div    = createElement "div",
-    width:    width + "px"
-    height:   height + "px"
-    position: "absolute"
-    left:     x.toString() + "px"
-    top:      y.toString() + "px"
+    width:      width + "px"
+    height:     height + "px"
+    position:   "absolute"
+    left:       x.toString() + "px"
+    top:        y.toString() + "px"
+    background: "white"
+    overflowY:  "auto"
+    zIndex:     999
 
   url  =
     "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"

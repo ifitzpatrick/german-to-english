@@ -51,8 +51,7 @@ module.exports =
       color:        "#eefcff"
       overflowY:    "auto"
       zIndex:       9999
-      border:       "solid #2b2301 2px"
-      borderRadius: "20px"
+      border:       "solid #2b2301 1px"
 
     url  =
       "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"

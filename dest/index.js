@@ -34,7 +34,7 @@ document.addEventListener("keydown", function(event) {
 
 
 },{"./popover":3}],3:[function(require,module,exports){
-var $, build, element, request, xmlToJson;
+var $, build, element, popover, request, xmlToJson;
 
 $ = require("./query");
 
@@ -45,10 +45,25 @@ request = require("./request");
 xmlToJson = require("./xml_to_json.coffee");
 
 build = function(search, tree) {
-  var base, cell, defRow, defTable, definition, lang, section, sectionDiv, sectionTitle, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+  var base, cell, defRow, defTable, definition, form, lang, searchBar, section, sectionDiv, sectionTitle, submit, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
   base = element.create("div", {
     fontFamily: "Helvetica",
     padding: "20px"
+  });
+  form = element.create("form");
+  base.appendChild(form);
+  searchBar = element.create("input");
+  form.appendChild(searchBar);
+  submit = element.create("button");
+  submit.innerText = "search";
+  submit.setAttribute("type", "submit");
+  form.appendChild(submit);
+  form.addEventListener("submit", function(event) {
+    popover.create(searchBar.value);
+    if (typeof event.preventDefault === "function") {
+      event.preventDefault();
+    }
+    return false;
   });
   title = element.create("h1");
   title.innerText = search;
@@ -80,7 +95,7 @@ build = function(search, tree) {
   return base;
 };
 
-module.exports = {
+module.exports = popover = {
   create: function(search) {
     var div, height, url, width;
     width = 600;

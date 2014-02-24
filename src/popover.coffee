@@ -8,9 +8,25 @@ build = (search, tree) ->
     fontFamily: "Helvetica"
     padding:    "20px"
 
+  form = element.create "form"
+  base.appendChild form
+
+  searchBar = element.create "input"
+  form.appendChild searchBar
+
+  submit = element.create "button"
+  submit.innerText = "search"
+  submit.setAttribute "type", "submit"
+  form.appendChild submit
+
+  form.addEventListener "submit", (event) ->
+    popover.create searchBar.value
+
+    event.preventDefault?()
+    return false
+
   title = element.create "h1"
   title.innerText = search
-
   base.appendChild title
 
   for section in tree.sections
@@ -35,7 +51,7 @@ build = (search, tree) ->
 
   return base
 
-module.exports =
+module.exports = popover =
   create: (search) ->
     width  = 600
     height = 800

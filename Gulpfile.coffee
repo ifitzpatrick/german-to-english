@@ -3,7 +3,7 @@ concat     = require "gulp-concat"
 browserify = require "gulp-browserify"
 
 gulp.task "default", ->
-  gulp.src(["src/main.coffee"], read: false)
+  gulp.src(["src/scripts/main.coffee"], read: false)
     .pipe(browserify(
       transform: ['coffeeify'],
       extensions: ['.coffee']

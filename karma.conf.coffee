@@ -1,3 +1,9 @@
 module.exports = (config) ->
   config.set
-    basePath: "dest/
+    basePath: "."
+    frameworks: ["jasmine"]
+    browsers: ["Chrome"]
+    files: [
+      "dest/index.js"
+      "test/**/*.spec.coffee"
+    ],

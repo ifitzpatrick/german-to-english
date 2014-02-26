@@ -18,6 +18,7 @@
     "gulp":                       "3.5.x",
     "gulp-concat":                "2.1.x",
     "gulp-browserify":            "0.4.x",
+    "gulp-stylus":                "0.0.x",
     "coffeeify":                  "0.6.x",
     "coffee-script":              "1.7.x",
     "karma-script-launcher":      "~0.1.0",

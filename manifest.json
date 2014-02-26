@@ -1,13 +1,14 @@
 {
   "manifest_version": 2,
 
-  "name": "german-to-english",
-  "description": "German english dictionary",
-  "version": "0.1",
+  "name":             "german-to-english",
+  "description":      "German english dictionary",
+  "version":          "0.1",
 
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["dest/index.js"]
+    "js":      ["dest/js/index.js"],
+    "css":     ["dest/css/index.css"]
   }],
   "permissions": ["webRequest"]
 }

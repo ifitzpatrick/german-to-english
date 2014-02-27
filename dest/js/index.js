@@ -100,19 +100,9 @@ module.exports = popover = {
     var div, height, url, width;
     width = 600;
     height = 800;
-    div = element.create("div", {
-      position: "fixed",
-      left: "100px",
-      top: "100px",
-      bottom: "100px",
-      right: "100px",
-      background: "#73afb6",
-      color: "#eefcff",
-      overflowY: "auto",
-      zIndex: 9999,
-      border: "solid #2b2301 1px"
-    });
+    div = element.create("div");
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
+    div.setAttribute("class", "ged-popover");
     div.innerText = "LOADING...";
     this.replace(div);
     return request(url).then(function(res) {

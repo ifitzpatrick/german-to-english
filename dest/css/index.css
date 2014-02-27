@@ -10,3 +10,7 @@
   z-index: 9999;
   border: solid #2b2301 1px;
 }
+.ged-popover-content {
+  font-family: Helvetica;
+  padding: 20px;
+}

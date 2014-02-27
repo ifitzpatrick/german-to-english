@@ -5,8 +5,7 @@ xmlToJson = require "./xml_to_json.coffee"
 
 build = (search, tree) ->
   base = element.create "div",
-    fontFamily: "Helvetica"
-    padding:    "20px"
+    class: "ged-popover-content"
 
   form = element.create "form"
   base.appendChild form
@@ -14,9 +13,10 @@ build = (search, tree) ->
   searchBar = element.create "input"
   form.appendChild searchBar
 
-  submit = element.create "button"
+  submit = element.create "button",
+    type: "submit"
+
   submit.innerText = "search"
-  submit.setAttribute "type", "submit"
   form.appendChild submit
 
   form.addEventListener "submit", (event) ->
@@ -55,11 +55,12 @@ module.exports = popover =
   create: (search) ->
     width  = 600
     height = 800
-    div    = element.create "div"
-    url    =
+    div    = element.create "div",
+      class: "ged-popover"
+
+    url =
       "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"
 
-    div.setAttribute "class", "ged-popover"
     div.innerText = "LOADING..."
     @replace div
 

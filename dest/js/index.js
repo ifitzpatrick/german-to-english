@@ -2,13 +2,13 @@
 var __hasProp = {}.hasOwnProperty;
 
 module.exports = {
-  create: function(tag, styles) {
+  create: function(tag, attrs) {
     var ele, key, value;
     ele = document.createElement(tag);
-    for (key in styles) {
-      if (!__hasProp.call(styles, key)) continue;
-      value = styles[key];
-      ele.style[key] = value;
+    for (key in attrs) {
+      if (!__hasProp.call(attrs, key)) continue;
+      value = attrs[key];
+      ele.setAttribute(key, value);
     }
     return ele;
   }
@@ -47,16 +47,16 @@ xmlToJson = require("./xml_to_json.coffee");
 build = function(search, tree) {
   var base, cell, defRow, defTable, definition, form, lang, searchBar, section, sectionDiv, sectionTitle, submit, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
   base = element.create("div", {
-    fontFamily: "Helvetica",
-    padding: "20px"
+    "class": "ged-popover-content"
   });
   form = element.create("form");
   base.appendChild(form);
   searchBar = element.create("input");
   form.appendChild(searchBar);
-  submit = element.create("button");
+  submit = element.create("button", {
+    type: "submit"
+  });
   submit.innerText = "search";
-  submit.setAttribute("type", "submit");
   form.appendChild(submit);
   form.addEventListener("submit", function(event) {
     popover.create(searchBar.value);
@@ -100,9 +100,10 @@ module.exports = popover = {
     var div, height, url, width;
     width = 600;
     height = 800;
-    div = element.create("div");
+    div = element.create("div", {
+      "class": "ged-popover"
+    });
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
-    div.setAttribute("class", "ged-popover");
     div.innerText = "LOADING...";
     this.replace(div);
     return request(url).then(function(res) {

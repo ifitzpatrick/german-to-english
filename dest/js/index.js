@@ -4,6 +4,12 @@ var __hasProp = {}.hasOwnProperty;
 module.exports = {
   create: function(tag, attrs) {
     var ele, key, value;
+    if (tag == null) {
+      tag = "div";
+    }
+    if (attrs == null) {
+      attrs = {};
+    }
     ele = document.createElement(tag);
     for (key in attrs) {
       if (!__hasProp.call(attrs, key)) continue;

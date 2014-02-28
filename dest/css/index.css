@@ -20,3 +20,12 @@
   padding-right: 10px;
   padding-bottom: 2px;
 }
+.ged-popover-close {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 10px;
+  right: 15px;
+  font-size: 2em;
+  cursor: pointer;
+}

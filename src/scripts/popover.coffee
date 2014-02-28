@@ -25,6 +25,15 @@ build = (search, tree) ->
     event.preventDefault?()
     return false
 
+  close = element.create "div",
+    class: "ged-popover-close"
+
+  close.innerHTML = "&times;"
+  base.appendChild close
+
+  close.addEventListener "click", ->
+    popover.replace()
+
   title = element.create "h1"
   title.innerText = search
   base.appendChild title

@@ -51,7 +51,7 @@ request = require("./request");
 xmlToJson = require("./xml_to_json.coffee");
 
 build = function(search, tree) {
-  var base, cell, defRow, defTable, definition, form, lang, searchBar, section, sectionDiv, sectionTitle, submit, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+  var base, cell, close, defRow, defTable, definition, form, lang, searchBar, section, sectionDiv, sectionTitle, submit, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
   base = element.create("div", {
     "class": "ged-popover-content"
   });
@@ -70,6 +70,14 @@ build = function(search, tree) {
       event.preventDefault();
     }
     return false;
+  });
+  close = element.create("div", {
+    "class": "ged-popover-close"
+  });
+  close.innerHTML = "&times;";
+  base.appendChild(close);
+  close.addEventListener("click", function() {
+    return popover.replace();
   });
   title = element.create("h1");
   title.innerText = search;

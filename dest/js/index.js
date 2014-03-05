@@ -1,10 +1,23 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var __hasProp = {}.hasOwnProperty;
+
 module.exports = {
-  buildElement: function(width, afterDraw) {
+  buildElement: function(width, activeColor, inactiveColor, options, flip) {
+    var attrName, attrValue, canvasOptions, key, value;
     if (width == null) {
       width = 20;
     }
-    return {
+    if (activeColor == null) {
+      activeColor = "white";
+    }
+    if (inactiveColor == null) {
+      inactiveColor = "#bbb";
+    }
+    if (options == null) {
+      options = {};
+    }
+    canvasOptions = {
+      flip: flip,
       tag: "canvas",
       attrs: (function(width) {
         return {
@@ -13,19 +26,54 @@ module.exports = {
         };
       })(width),
       onCreate: function(ele) {
-        var ctx;
-        ctx = ele.getContext("2d");
-        this.drawArrow(ctx, width);
-        return typeof afterDraw === "function" ? afterDraw(ctx, width) : void 0;
-      }
+        this.ele = ele;
+        this.active = false;
+        return this.redraw(ele, false, this.flip);
+      },
+      update: function(active) {
+        this.active = active;
+        return this.redraw(this.ele, active, this.flip);
+      },
+      redraw: (function(_this) {
+        return function(ele, active, flip) {
+          var color, ctx;
+          ctx = ele.getContext("2d");
+          color = active ? activeColor : inactiveColor;
+          return _this.drawArrow(ctx, width, color, flip);
+        };
+      })(this),
+      events: {}
     };
+    for (key in options) {
+      if (!__hasProp.call(options, key)) continue;
+      value = options[key];
+      if (key === "attrs" || key === "events") {
+        for (attrName in value) {
+          if (!__hasProp.call(value, attrName)) continue;
+          attrValue = value[attrName];
+          canvasOptions[key][attrName] = attrValue;
+        }
+      } else {
+        canvasOptions[key] = value;
+      }
+    }
+    return canvasOptions;
   },
-  drawArrow: function(ctx, width) {
+  drawArrow: function(ctx, width, color, flip) {
     var scale;
+    if (flip == null) {
+      flip = false;
+    }
+    ctx.clearRect(0, 0, width, width);
+    ctx.save();
     scale = function(value) {
       return width * (value / 10);
     };
-    ctx.fillStyle = "black";
+    if (flip) {
+      ctx.translate(width, 0);
+      ctx.scale(-1, 1);
+    }
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.moveTo(scale(9), scale(0));
     ctx.lineTo(scale(4), scale(5));
@@ -36,16 +84,14 @@ module.exports = {
     ctx.lineTo(scale(10), scale(1));
     ctx.lineTo(scale(10), scale(0));
     ctx.lineTo(scale(9), scale(0));
-    return ctx.fill();
+    ctx.fill();
+    return ctx.restore();
   },
-  flip: function(ctx, width) {
-    return ctx.scale(1, -1);
+  left: function(width, activeColor, inactiveColor, options) {
+    return this.buildElement(width, activeColor, inactiveColor, options);
   },
-  left: function(width) {
-    return this.buildElement(width);
-  },
-  right: function(width) {
-    return this.buildElement(width, this.flip);
+  right: function(width, activeColor, inactiveColor, options) {
+    return this.buildElement(width, activeColor, inactiveColor, options, true);
   }
 };
 
@@ -124,7 +170,32 @@ module.exports = function(search, tree) {
 
 
 },{}],3:[function(require,module,exports){
-module.exports = function(popover) {
+var arrow;
+
+arrow = require("./arrow");
+
+module.exports = function(popover, arrowActiveColor, arrowDisabledColor) {
+  var leftArrow, rightArrow;
+  if (arrowActiveColor == null) {
+    arrowActiveColor = "white";
+  }
+  if (arrowDisabledColor == null) {
+    arrowDisabledColor = "#bbb";
+  }
+  leftArrow = arrow.left(20, arrowActiveColor, arrowDisabledColor, {
+    events: {
+      click: function() {
+        return popover.back();
+      }
+    }
+  });
+  rightArrow = arrow.right(20, arrowActiveColor, arrowDisabledColor, {
+    events: {
+      click: function() {
+        return popover.forward();
+      }
+    }
+  });
   return {
     tag: "form",
     events: {
@@ -139,7 +210,7 @@ module.exports = function(popover) {
       }
     },
     children: [
-      {
+      leftArrow, rightArrow, {
         tag: "input",
         attrs: {
           name: "searchBar"
@@ -161,12 +232,18 @@ module.exports = function(popover) {
           }
         }
       }
-    ]
+    ],
+    arrowActiveColor: "white",
+    arrowDisabledColor: "#bbb",
+    update: function(leftActive, rightActive) {
+      leftArrow.update(leftActive);
+      return rightArrow.update(rightActive);
+    }
   };
 };
 
 
-},{}],4:[function(require,module,exports){
+},{"./arrow":1}],4:[function(require,module,exports){
 var __hasProp = {}.hasOwnProperty;
 
 module.exports = {
@@ -229,7 +306,7 @@ document.addEventListener("keydown", function(event) {
 
 
 },{"./popover":6}],6:[function(require,module,exports){
-var $, arrow, build, element, entry, header, popover, request, xmlToJson;
+var $, element, entry, header, popover, request, xmlToJson;
 
 $ = require("./query");
 
@@ -239,28 +316,46 @@ request = require("./request");
 
 xmlToJson = require("./xml_to_json");
 
-arrow = require("./components/arrow");
-
 header = require("./components/header");
 
 entry = require("./components/entry");
 
-build = function(search, tree) {
-  var base;
-  base = element.create(entry(search, tree));
-  return base;
-};
-
 module.exports = popover = {
+  buildEntry: function(search, tree) {
+    return element.create(entry(search, tree));
+  },
+  refresh: function() {
+    this.entry.remove();
+    this.entry = this.previous[this.marker];
+    this.current.appendChild(this.entry);
+    return this.currentHeader.update(this.canBack(), this.canForward());
+  },
+  canForward: function() {
+    return this.marker > 0;
+  },
+  forward: function() {
+    if (this.canForward()) {
+      this.marker--;
+      return this.refresh();
+    }
+  },
+  canBack: function() {
+    return this.marker < this.previous.length - 1;
+  },
+  back: function() {
+    if (this.canBack()) {
+      this.marker++;
+      return this.refresh();
+    }
+  },
   create: function(search) {
-    var div, height, loading, url, width;
-    width = 600;
-    height = 800;
+    var div, loading, url;
+    this.currentHeader = header(this);
     div = element.create({
       attrs: {
         "class": "ged-popover"
       },
-      children: [header(this)]
+      children: [this.currentHeader]
     });
     loading = element.create({
       text: "LOADING..."
@@ -268,37 +363,46 @@ module.exports = popover = {
     div.appendChild(loading);
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
     this.replace(div);
-    return request(url).then(function(res) {
-      var spec, tree, xml;
-      xml = res.responseText;
-      spec = {
-        name: "sections",
-        selector: "section",
-        attrs: {
-          name: "sctTitle"
-        },
-        children: [
-          {
-            name: "definitions",
-            selector: "entry",
-            children: [
-              {
-                name: "langs",
-                selector: "side",
-                attrs: {
-                  lang: "lang"
-                },
-                text: true
-              }
-            ]
-          }
-        ]
+    return request(url).then((function(_this) {
+      return function(res) {
+        var spec, tree, xml;
+        xml = res.responseText;
+        spec = {
+          name: "sections",
+          selector: "section",
+          attrs: {
+            name: "sctTitle"
+          },
+          children: [
+            {
+              name: "definitions",
+              selector: "entry",
+              children: [
+                {
+                  name: "langs",
+                  selector: "side",
+                  attrs: {
+                    lang: "lang"
+                  },
+                  text: true
+                }
+              ]
+            }
+          ]
+        };
+        tree = xmlToJson(xml, spec);
+        loading.remove();
+        _this.entry = _this.buildEntry(search, tree);
+        _this.previous.unshift(_this.entry);
+        _this.marker = 0;
+        div.appendChild(_this.entry);
+        return _this.currentHeader.update(_this.canBack(), _this.canForward());
       };
-      tree = xmlToJson(xml, spec);
+    })(this), function() {
       loading.remove();
-      return div.appendChild(build(search, tree));
-    }, function() {
-      return div.innerText = "ERROR";
+      return div.appendChild(element.create({
+        text: "ERROR"
+      }));
     });
   },
   replace: function(newPopover) {
@@ -315,11 +419,12 @@ module.exports = popover = {
     }
     return this.current = newPopover;
   },
-  current: null
+  current: null,
+  previous: []
 };
 
 
-},{"./components/arrow":1,"./components/entry":2,"./components/header":3,"./element":4,"./query":7,"./request":8,"./xml_to_json":9}],7:[function(require,module,exports){
+},{"./components/entry":2,"./components/header":3,"./element":4,"./query":7,"./request":8,"./xml_to_json":9}],7:[function(require,module,exports){
 module.exports = function(selector) {
   return document.querySelectorAll(selector);
 };

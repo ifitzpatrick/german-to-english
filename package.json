@@ -2,7 +2,6 @@
   "name": "german-to-english",
   "version": "0.1.0",
   "description": "German-english dictionary chrome extension",
-  "main": "dest/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:ifitzpatrick/german-to-english.git"

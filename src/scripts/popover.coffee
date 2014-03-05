@@ -2,24 +2,39 @@ $         = require "./query"
 element   = require "./element"
 request   = require "./request"
 xmlToJson = require "./xml_to_json"
-arrow     = require "./components/arrow"
 header    = require "./components/header"
 entry     = require "./components/entry"
 
-build = (search, tree) ->
-  base = element.create entry(search, tree)
-  return base
-
 module.exports = popover =
+  buildEntry: (search, tree) ->
+    element.create entry(search, tree)
+
+  refresh: ->
+    @entry.remove()
+    @entry = @previous[@marker]
+    @current.appendChild @entry
+    @currentHeader.update @canBack(), @canForward()
+
+  canForward: -> @marker > 0
+  forward: ->
+    if @canForward()
+      @marker--
+      @refresh()
+
+  canBack: -> @marker < @previous.length - 1
+  back: ->
+    if @canBack()
+      @marker++
+      @refresh()
+
   create: (search) ->
-    width  = 600
-    height = 800
-    div    = element.create
+    @currentHeader = header this
+    div           = element.create
       attrs:
         class: "ged-popover"
 
       children: [
-        header this
+        @currentHeader
       ]
 
     loading = element.create
@@ -32,7 +47,7 @@ module.exports = popover =
 
     @replace div
 
-    request(url).then (res) ->
+    request(url).then (res) =>
       xml = res.responseText
       spec =
         name: "sections"
@@ -56,10 +71,16 @@ module.exports = popover =
       tree = xmlToJson xml, spec
 
       loading.remove()
-      div.appendChild build(search, tree)
+
+      @entry = @buildEntry(search, tree)
+      @previous.unshift @entry
+      @marker = 0
+      div.appendChild @entry
+      @currentHeader.update @canBack(), @canForward()
 
     , ->
-      div.innerText = "ERROR"
+      loading.remove()
+      div.appendChild element.create text: "ERROR"
 
   replace: (newPopover = null) ->
     body = $("body")[0]
@@ -72,3 +93,5 @@ module.exports = popover =
     @current = newPopover
 
   current: null
+  previous: []
+

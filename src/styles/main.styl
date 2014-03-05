@@ -6,18 +6,18 @@ lightish      = #eee
 btn-yellowish = hsl(70, 15%, 90%)
 
 .ged-popover
-  position:     fixed
-  left:         100px
-  top:          100px
-  bottom:       100px
-  right:        100px
-  background:   lightish
-  color:        darkish
-  z-index:      9999
-  border:       solid #2b2301 1px
-  line-height:  1.5
-  font-size:    11pt
-  overflow-y: auto
+  position:    fixed
+  left:        100px
+  top:         100px
+  bottom:      100px
+  background:  lightish
+  color:       darkish
+  z-index:     9999
+  border:      solid #2b2301 1px
+  line-height: 1.5
+  font-size:   11pt
+  overflow-y:  auto
+  min-width:   490px
 
   *
     box-sizing: border-box
@@ -33,13 +33,21 @@ btn-yellowish = hsl(70, 15%, 90%)
   form
     width:      100%
     background: darkish
-    padding:    15px
     color:      lightish
+    height:     55px
+
+  canvas, button, input
+    float: left
+
+  canvas
+    margin: 15px
+    cursor: pointer
 
   button, input
     background: lightish
     color:      darkish
     padding:    5px 15px
+    margin:     15px
 
   input
     border-radius: 15px

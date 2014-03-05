@@ -3,7 +3,6 @@
   left: 100px;
   top: 100px;
   bottom: 100px;
-  right: 100px;
   background: #eee;
   color: #555;
   z-index: 9999;
@@ -11,6 +10,7 @@
   line-height: 1.5;
   font-size: 11pt;
   overflow-y: auto;
+  min-width: 490px;
 }
 .ged-popover * {
   box-sizing: border-box;
@@ -26,14 +26,24 @@
 .ged-popover form {
   width: 100%;
   background: #555;
-  padding: 15px;
   color: #eee;
+  height: 55px;
+}
+.ged-popover canvas,
+.ged-popover button,
+.ged-popover input {
+  float: left;
+}
+.ged-popover canvas {
+  margin: 15px;
+  cursor: pointer;
 }
 .ged-popover button,
 .ged-popover input {
   background: #eee;
   color: #555;
   padding: 5px 15px;
+  margin: 15px;
 }
 .ged-popover input {
   border-radius: 15px;
@@ -67,7 +77,7 @@
   display: inline-block;
   position: absolute;
   right: 25px;
-  top: 12px;
+  top: 8px;
 }
 .ged-popover-section {
   padding-top: 10px;

@@ -6,16 +6,26 @@
   right: 100px;
   background: #73afb6;
   color: #eefcff;
-  overflow-y: auto;
   z-index: 9999;
   border: solid #2b2301 1px;
   line-height: 1.5;
+  font-size: 11pt;
+}
+.ged-popover * {
+  box-sizing: border-box;
 }
 .ged-popover h1 {
   font-size: 3em;
+  border-bottom: solid #fff 1px;
+  width: 50%;
 }
 .ged-popover h2 {
   font-size: 2em;
+}
+.ged-popover form {
+  width: 100%;
+  background: #555;
+  padding: 10px;
 }
 .ged-popover button {
   padding: 2px;
@@ -44,4 +54,15 @@
   right: 10px;
   font-size: 2em;
   cursor: pointer;
+}
+.ged-popover-content-wrapper {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  overflow-y: auto;
+}
+.ged-popover-section {
+  padding-top: 10px;
 }

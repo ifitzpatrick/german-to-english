@@ -128,7 +128,7 @@ build = function(search, tree) {
   var base, section;
   base = element.create({
     attrs: {
-      "class": "ged-popover-content"
+      "class": "ged-popover-content-wrapper"
     },
     children: [
       {
@@ -170,61 +170,71 @@ build = function(search, tree) {
           }
         ]
       }, {
-        tag: "h1",
-        text: search
-      }, {
-        children: (function() {
-          var _i, _len, _ref, _results;
-          _ref = tree.sections;
-          _results = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            section = _ref[_i];
-            _results.push((function(section) {
-              var definition;
-              return {
-                children: [
-                  {
-                    tag: "h2",
-                    text: section.name
-                  }, {
-                    tag: "table",
-                    children: (function() {
-                      var _j, _len1, _ref1, _results1;
-                      _ref1 = section.definitions;
-                      _results1 = [];
-                      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-                        definition = _ref1[_j];
-                        _results1.push((function(definition) {
-                          var lang;
-                          return {
-                            tag: "tr",
-                            children: (function() {
-                              var _k, _len2, _ref2, _results2;
-                              _ref2 = definition.langs;
-                              _results2 = [];
-                              for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-                                lang = _ref2[_k];
-                                _results2.push((function(lang) {
-                                  return {
-                                    tag: "td",
-                                    text: lang.text
-                                  };
-                                })(lang));
-                              }
-                              return _results2;
-                            })()
-                          };
-                        })(definition));
+        attrs: {
+          "class": "ged-popover-content"
+        },
+        children: [
+          {
+            tag: "h1",
+            text: search
+          }, {
+            children: (function() {
+              var _i, _len, _ref, _results;
+              _ref = tree.sections;
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                section = _ref[_i];
+                _results.push((function(section) {
+                  var definition;
+                  return {
+                    attrs: {
+                      "class": "ged-popover-section"
+                    },
+                    children: [
+                      {
+                        tag: "h2",
+                        text: section.name
+                      }, {
+                        tag: "table",
+                        children: (function() {
+                          var _j, _len1, _ref1, _results1;
+                          _ref1 = section.definitions;
+                          _results1 = [];
+                          for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                            definition = _ref1[_j];
+                            _results1.push((function(definition) {
+                              var lang;
+                              return {
+                                tag: "tr",
+                                children: (function() {
+                                  var _k, _len2, _ref2, _results2;
+                                  _ref2 = definition.langs;
+                                  _results2 = [];
+                                  for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                                    lang = _ref2[_k];
+                                    _results2.push((function(lang) {
+                                      return {
+                                        tag: "td",
+                                        text: lang.text
+                                      };
+                                    })(lang));
+                                  }
+                                  return _results2;
+                                })()
+                              };
+                            })(definition));
+                          }
+                          return _results1;
+                        })()
                       }
-                      return _results1;
-                    })()
-                  }
-                ]
-              };
-            })(section));
+                    ]
+                  };
+                })(section));
+              }
+              return _results;
+            })()
           }
-          return _results;
-        })()
+        ]
       }
     ]
   });

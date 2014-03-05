@@ -6,23 +6,35 @@
   right:       100px
   background:  #73afb6
   color:       #eefcff
-  overflow-y:  auto
   z-index:     9999
   border:      solid #2b2301 1px
   line-height: 1.5
+  font-size:   11pt
+
+  *
+    box-sizing: border-box
 
   h1
-    font-size: 3em
+    font-size:     3em
+    border-bottom: solid white 1px
+    width:         50%
 
   h2
     font-size: 2em
 
+  form
+    width:      100%
+    background: #555
+    padding:    10px
+
   button
-    padding:     2px
-    border:      solid black 1px
-    background:  #eee
-    margin-left: 10px
-    cursor:      pointer
+    padding:       2px
+    padding-left:  5px
+    padding-right: 5px
+    border:        solid black 1px
+    background:    #eee
+    margin-left:   10px
+    cursor:        pointer
 
     &:hover
       background: #aaa
@@ -44,3 +56,15 @@
   right:     10px
   font-size: 2em
   cursor:    pointer
+
+.ged-popover-content-wrapper
+  position:   absolute
+  top:        0px
+  left:       0px
+  right:      0px
+  bottom:     0px
+  overflow-y: auto
+
+.ged-popover-section
+  padding-top: 10px
+

@@ -1,7 +1,8 @@
 $         = require "./query"
 element   = require "./element"
 request   = require "./request"
-xmlToJson = require "./xml_to_json.coffee"
+xmlToJson = require "./xml_to_json"
+arrow     = require "./components/arrow"
 
 build = (search, tree) ->
   base = element.create
@@ -11,6 +12,8 @@ build = (search, tree) ->
     children: [
       tag: "form"
       children: [
+        #arrow.left()
+        #arrow.right()
         tag: "input"
       ,
         tag: "button"

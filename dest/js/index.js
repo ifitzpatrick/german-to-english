@@ -1,4 +1,56 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports = {
+  buildElement: function(width, afterDraw) {
+    if (width == null) {
+      width = 20;
+    }
+    return {
+      tag: "canvas",
+      attrs: (function(width) {
+        return {
+          width: width,
+          height: width
+        };
+      })(width),
+      onCreate: function(ele) {
+        var ctx;
+        ctx = ele.getContext("2d");
+        this.drawArrow(ctx, width);
+        return typeof afterDraw === "function" ? afterDraw(ctx, width) : void 0;
+      }
+    };
+  },
+  drawArrow: function(ctx, width) {
+    var scale;
+    scale = function(value) {
+      return width * (value / 10);
+    };
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.moveTo(scale(9), scale(0));
+    ctx.lineTo(scale(4), scale(5));
+    ctx.lineTo(scale(9), scale(10));
+    ctx.lineTo(scale(10), scale(10));
+    ctx.lineTo(scale(10), scale(9));
+    ctx.lineTo(scale(6), scale(5));
+    ctx.lineTo(scale(10), scale(1));
+    ctx.lineTo(scale(10), scale(0));
+    ctx.lineTo(scale(9), scale(0));
+    return ctx.fill();
+  },
+  flip: function(ctx, width) {
+    return ctx.scale(1, -1);
+  },
+  left: function(width) {
+    return this.buildElement(width);
+  },
+  right: function(width) {
+    return this.buildElement(width, this.flip);
+  }
+};
+
+
+},{}],2:[function(require,module,exports){
 var __hasProp = {}.hasOwnProperty;
 
 module.exports = {
@@ -33,12 +85,15 @@ module.exports = {
       child = _ref2[_j];
       ele.appendChild(this.create(child));
     }
+    if (typeof options.onCreate === "function") {
+      options.onCreate(ele);
+    }
     return ele;
   }
 };
 
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var popover;
 
 popover = require("./popover");
@@ -56,8 +111,8 @@ document.addEventListener("keydown", function(event) {
 });
 
 
-},{"./popover":3}],3:[function(require,module,exports){
-var $, build, element, popover, request, xmlToJson;
+},{"./popover":4}],4:[function(require,module,exports){
+var $, arrow, build, element, popover, request, xmlToJson;
 
 $ = require("./query");
 
@@ -65,7 +120,9 @@ element = require("./element");
 
 request = require("./request");
 
-xmlToJson = require("./xml_to_json.coffee");
+xmlToJson = require("./xml_to_json");
+
+arrow = require("./components/arrow");
 
 build = function(search, tree) {
   var base, section;
@@ -238,13 +295,13 @@ module.exports = popover = {
 };
 
 
-},{"./element":1,"./query":4,"./request":5,"./xml_to_json.coffee":6}],4:[function(require,module,exports){
+},{"./components/arrow":1,"./element":2,"./query":5,"./request":6,"./xml_to_json":7}],5:[function(require,module,exports){
 module.exports = function(selector) {
   return document.querySelectorAll(selector);
 };
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function(url) {
   return new Promise(function(resolve, reject) {
     var xhr;
@@ -261,7 +318,7 @@ module.exports = function(url) {
 };
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var nodeToJSON,
   __hasProp = {}.hasOwnProperty;
 
@@ -306,4 +363,4 @@ module.exports = function(xml, spec) {
 };
 
 
-},{}]},{},[2])
+},{}]},{},[3])

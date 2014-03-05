@@ -18,5 +18,7 @@ module.exports =
     for child in options.children or []
       ele.appendChild @create child
 
+    options.onCreate? ele
+
     return ele
 

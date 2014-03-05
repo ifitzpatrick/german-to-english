@@ -48,6 +48,9 @@
   padding-right: 10px;
   padding-bottom: 2px;
 }
+.ged-popover-content td:first-child {
+  padding-right: 50px;
+}
 .ged-popover-close {
   position: absolute;
   width: 20px;

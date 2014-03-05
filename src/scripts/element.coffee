@@ -12,8 +12,8 @@ module.exports =
     if options.html?
       ele.innerHTML = options.html
 
-    for event in options.events or []
-      ele.addEventListener event.type, event.handler
+    for own eventType, eventHandler of options.events or {}
+      ele.addEventListener eventType, eventHandler
 
     for child in options.children or []
       ele.appendChild @create child

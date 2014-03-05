@@ -1,15 +1,22 @@
+blue-green    = #73afb6
+gold          = hsl(70, 20%, 60%)
+reddish       = hsl(355, 20%, 30%)
+darkish       = #555
+btn-yellowish = hsl(70, 15%, 90%)
+
 .ged-popover
-  position:    fixed
-  left:        100px
-  top:         100px
-  bottom:      100px
-  right:       100px
-  background:  #73afb6
-  color:       #eefcff
-  z-index:     9999
-  border:      solid #2b2301 1px
-  line-height: 1.5
-  font-size:   11pt
+  position:     fixed
+  left:         100px
+  top:          100px
+  bottom:       100px
+  right:        100px
+  background:   gold
+  color:        #eefcff
+  z-index:      9999
+  border:       solid #2b2301 1px
+  line-height:  1.5
+  font-size:    11pt
+  overflow-y: auto
 
   *
     box-sizing: border-box
@@ -24,8 +31,17 @@
 
   form
     width:      100%
-    background: #555
-    padding:    10px
+    background: reddish
+    padding:    20px
+
+  button, input
+    background: btn-yellowish
+    padding:    8px 15px
+
+  input
+    border-radius: 15px
+    outline:       none
+    border:        solid black 1px
 
   button
     padding:       2px
@@ -52,21 +68,12 @@
       padding-right: 50px
 
 .ged-popover-close
-  position:  absolute
-  width:     20px
-  height:    20px
-  top:       0px
-  right:     10px
   font-size: 2em
   cursor:    pointer
-
-.ged-popover-content-wrapper
-  position:   absolute
-  top:        0px
-  left:       0px
-  right:      0px
-  bottom:     0px
-  overflow-y: auto
+  display:   inline-block
+  position:  absolute
+  right:     25px
+  top:       15px
 
 .ged-popover-section
   padding-top: 10px

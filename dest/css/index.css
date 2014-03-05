@@ -4,12 +4,13 @@
   top: 100px;
   bottom: 100px;
   right: 100px;
-  background: #73afb6;
+  background: #a7ad85;
   color: #eefcff;
   z-index: 9999;
   border: solid #2b2301 1px;
   line-height: 1.5;
   font-size: 11pt;
+  overflow-y: auto;
 }
 .ged-popover * {
   box-sizing: border-box;
@@ -24,8 +25,18 @@
 }
 .ged-popover form {
   width: 100%;
-  background: #555;
-  padding: 10px;
+  background: #5c3d40;
+  padding: 20px;
+}
+.ged-popover button,
+.ged-popover input {
+  background: #e8e9e2;
+  padding: 8px 15px;
+}
+.ged-popover input {
+  border-radius: 15px;
+  outline: none;
+  border: solid #000 1px;
 }
 .ged-popover button {
   padding: 2px;
@@ -52,21 +63,12 @@
   padding-right: 50px;
 }
 .ged-popover-close {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 0px;
-  right: 10px;
   font-size: 2em;
   cursor: pointer;
-}
-.ged-popover-content-wrapper {
+  display: inline-block;
   position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  overflow-y: auto;
+  right: 25px;
+  top: 15px;
 }
 .ged-popover-section {
   padding-top: 10px;

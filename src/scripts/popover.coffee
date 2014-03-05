@@ -3,72 +3,11 @@ element   = require "./element"
 request   = require "./request"
 xmlToJson = require "./xml_to_json"
 arrow     = require "./components/arrow"
+header    = require "./components/header"
+entry     = require "./components/entry"
 
 build = (search, tree) ->
-  base = element.create
-    attrs:
-      class: "ged-popover-content-wrapper"
-
-    children: [
-      tag: "form"
-      children: [
-        #arrow.left()
-        #arrow.right()
-        tag: "input"
-      ,
-        tag: "button"
-        text: "Search"
-        attrs:
-          type: "submit"
-      ]
-      events: [
-        type: "submit"
-        handler: (event) ->
-          popover.create searchBar.value
-
-          event.preventDefault?()
-          return false
-      ]
-    ,
-      attrs:
-        class: "ged-popover-close"
-      html: "&times;"
-      events: [
-        type: "click"
-        handler: -> popover.replace()
-      ]
-    ,
-      attrs:
-        class: "ged-popover-content"
-
-      children: [
-        tag: "h1"
-        text: search
-      ,
-        children: (for section in tree.sections
-          do (section) ->
-            attrs:
-              class: "ged-popover-section"
-
-            children: [
-              tag: "h2"
-              text: section.name
-            ,
-              tag: "table"
-              children: (for definition in section.definitions
-                do (definition) ->
-                  tag: "tr"
-                  children: (for lang in definition.langs
-                    do (lang) ->
-                      tag: "td"
-                      text: lang.text
-                  )
-              )
-            ]
-        )
-      ]
-    ]
-
+  base = element.create entry(search, tree)
   return base
 
 module.exports = popover =
@@ -78,7 +17,15 @@ module.exports = popover =
     div    = element.create
       attrs:
         class: "ged-popover"
+
+      children: [
+        header this
+      ]
+
+    loading = element.create
       text: "LOADING..."
+
+    div.appendChild loading
 
     url =
       "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"
@@ -107,7 +54,8 @@ module.exports = popover =
         ]
 
       tree = xmlToJson xml, spec
-      div.innerHTML = ""
+
+      loading.remove()
       div.appendChild build(search, tree)
 
     , ->

@@ -1,7 +1,8 @@
-blue-green    = #73afb6
+blueish-green = #73afb6
 gold          = hsl(70, 20%, 60%)
 reddish       = hsl(355, 20%, 30%)
 darkish       = #555
+lightish      = #eee
 btn-yellowish = hsl(70, 15%, 90%)
 
 .ged-popover
@@ -10,8 +11,8 @@ btn-yellowish = hsl(70, 15%, 90%)
   top:          100px
   bottom:       100px
   right:        100px
-  background:   gold
-  color:        #eefcff
+  background:   lightish
+  color:        darkish
   z-index:      9999
   border:       solid #2b2301 1px
   line-height:  1.5
@@ -23,7 +24,7 @@ btn-yellowish = hsl(70, 15%, 90%)
 
   h1
     font-size:     3em
-    border-bottom: solid white 1px
+    border-bottom: solid darkish 1px
     width:         50%
 
   h2
@@ -31,12 +32,14 @@ btn-yellowish = hsl(70, 15%, 90%)
 
   form
     width:      100%
-    background: reddish
-    padding:    20px
+    background: darkish
+    padding:    15px
+    color:      lightish
 
   button, input
-    background: btn-yellowish
-    padding:    8px 15px
+    background: lightish
+    color:      darkish
+    padding:    5px 15px
 
   input
     border-radius: 15px
@@ -44,16 +47,13 @@ btn-yellowish = hsl(70, 15%, 90%)
     border:        solid black 1px
 
   button
-    padding:       2px
-    padding-left:  5px
-    padding-right: 5px
-    border:        solid black 1px
-    background:    #eee
-    margin-left:   10px
-    cursor:        pointer
+    border:      solid black 1px
+    background:  lightish
+    margin-left: 10px
+    cursor:      pointer
 
     &:hover
-      background: #aaa
+      background: #bbb
 
 .ged-popover-content
   font-family: Helvetica
@@ -73,7 +73,7 @@ btn-yellowish = hsl(70, 15%, 90%)
   display:   inline-block
   position:  absolute
   right:     25px
-  top:       15px
+  top:       8px
 
 .ged-popover-section
   padding-top: 10px

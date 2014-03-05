@@ -4,8 +4,8 @@
   top: 100px;
   bottom: 100px;
   right: 100px;
-  background: #a7ad85;
-  color: #eefcff;
+  background: #eee;
+  color: #555;
   z-index: 9999;
   border: solid #2b2301 1px;
   line-height: 1.5;
@@ -17,7 +17,7 @@
 }
 .ged-popover h1 {
   font-size: 3em;
-  border-bottom: solid #fff 1px;
+  border-bottom: solid #555 1px;
   width: 50%;
 }
 .ged-popover h2 {
@@ -25,13 +25,15 @@
 }
 .ged-popover form {
   width: 100%;
-  background: #5c3d40;
-  padding: 20px;
+  background: #555;
+  padding: 15px;
+  color: #eee;
 }
 .ged-popover button,
 .ged-popover input {
-  background: #e8e9e2;
-  padding: 8px 15px;
+  background: #eee;
+  color: #555;
+  padding: 5px 15px;
 }
 .ged-popover input {
   border-radius: 15px;
@@ -39,16 +41,13 @@
   border: solid #000 1px;
 }
 .ged-popover button {
-  padding: 2px;
-  padding-left: 5px;
-  padding-right: 5px;
   border: solid #000 1px;
   background: #eee;
   margin-left: 10px;
   cursor: pointer;
 }
 .ged-popover button:hover {
-  background: #aaa;
+  background: #bbb;
 }
 .ged-popover-content {
   font-family: Helvetica;
@@ -68,7 +67,7 @@
   display: inline-block;
   position: absolute;
   right: 25px;
-  top: 15px;
+  top: 12px;
 }
 .ged-popover-section {
   padding-top: 10px;

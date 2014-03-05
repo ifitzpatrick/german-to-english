@@ -4,59 +4,59 @@ request   = require "./request"
 xmlToJson = require "./xml_to_json.coffee"
 
 build = (search, tree) ->
-  base = element.create "div",
-    class: "ged-popover-content"
+  base = element.create
+    attrs:
+      class: "ged-popover-content"
 
-  form = element.create "form"
-  base.appendChild form
+    children: [
+      tag: "form"
+      children: [
+        tag: "input"
+      ,
+        tag: "button"
+        text: "Search"
+        attrs:
+          type: "submit"
+      ]
+      events: [
+        type: "submit"
+        handler: (event) ->
+          popover.create searchBar.value
 
-  searchBar = element.create "input"
-  form.appendChild searchBar
-
-  submit = element.create "button",
-    type: "submit"
-
-  submit.innerText = "search"
-  form.appendChild submit
-
-  form.addEventListener "submit", (event) ->
-    popover.create searchBar.value
-
-    event.preventDefault?()
-    return false
-
-  close = element.create "div",
-    class: "ged-popover-close"
-
-  close.innerHTML = "&times;"
-  base.appendChild close
-
-  close.addEventListener "click", ->
-    popover.replace()
-
-  title = element.create "h1"
-  title.innerText = search
-  base.appendChild title
-
-  for section in tree.sections
-    sectionDiv = element.create "div"
-    base.appendChild sectionDiv
-
-    sectionTitle           = element.create "h2"
-    sectionTitle.innerText = section.name
-
-    sectionDiv.appendChild sectionTitle
-
-    defTable = element.create "table"
-    sectionDiv.appendChild defTable
-
-    for definition in section.definitions
-      defRow = element.create "tr"
-      defTable.appendChild defRow
-      for lang in definition.langs
-        cell = element.create "td"
-        cell.innerText = lang.text
-        defRow.appendChild cell
+          event.preventDefault?()
+          return false
+      ]
+    ,
+      attrs:
+        class: "ged-popover-close"
+      html: "&times;"
+      events: [
+        type: "click"
+        handler: -> popover.replace()
+      ]
+    ,
+      tag: "h1"
+      text: search
+    ,
+      children: (for section in tree.sections
+        do (section) ->
+          children: [
+            tag: "h2"
+            text: section.name
+          ,
+            tag: "table"
+            children: (for definition in section.definitions
+              do (definition) ->
+                tag: "tr"
+                children: (for lang in definition.langs
+                  do (lang) ->
+                    tag: "td"
+                    text: lang.text
+                )
+            )
+          ]
+      )
+    ]
 
   return base
 
@@ -64,13 +64,14 @@ module.exports = popover =
   create: (search) ->
     width  = 600
     height = 800
-    div    = element.create "div",
-      class: "ged-popover"
+    div    = element.create
+      attrs:
+        class: "ged-popover"
+      text: "LOADING..."
 
     url =
       "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"
 
-    div.innerText = "LOADING..."
     @replace div
 
     request(url).then (res) ->

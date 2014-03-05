@@ -2,19 +2,36 @@
 var __hasProp = {}.hasOwnProperty;
 
 module.exports = {
-  create: function(tag, attrs) {
-    var ele, key, value;
-    if (tag == null) {
-      tag = "div";
+  create: function(options) {
+    var child, ele, event, key, value, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+    if (options == null) {
+      options = {};
     }
-    if (attrs == null) {
-      attrs = {};
+    if (options.tag == null) {
+      options.tag = "div";
     }
-    ele = document.createElement(tag);
-    for (key in attrs) {
-      if (!__hasProp.call(attrs, key)) continue;
-      value = attrs[key];
+    ele = document.createElement(options.tag);
+    _ref = (options != null ? options.attrs : void 0) || {};
+    for (key in _ref) {
+      if (!__hasProp.call(_ref, key)) continue;
+      value = _ref[key];
       ele.setAttribute(key, value);
+    }
+    if (options.text != null) {
+      ele.innerText = options.text;
+    }
+    if (options.html != null) {
+      ele.innerHTML = options.html;
+    }
+    _ref1 = options.events || [];
+    for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+      event = _ref1[_i];
+      ele.addEventListener(event.type, event.handler);
+    }
+    _ref2 = options.children || [];
+    for (_j = 0, _len1 = _ref2.length; _j < _len1; _j++) {
+      child = _ref2[_j];
+      ele.appendChild(this.create(child));
     }
     return ele;
   }
@@ -51,61 +68,109 @@ request = require("./request");
 xmlToJson = require("./xml_to_json.coffee");
 
 build = function(search, tree) {
-  var base, cell, close, defRow, defTable, definition, form, lang, searchBar, section, sectionDiv, sectionTitle, submit, title, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
-  base = element.create("div", {
-    "class": "ged-popover-content"
-  });
-  form = element.create("form");
-  base.appendChild(form);
-  searchBar = element.create("input");
-  form.appendChild(searchBar);
-  submit = element.create("button", {
-    type: "submit"
-  });
-  submit.innerText = "search";
-  form.appendChild(submit);
-  form.addEventListener("submit", function(event) {
-    popover.create(searchBar.value);
-    if (typeof event.preventDefault === "function") {
-      event.preventDefault();
-    }
-    return false;
-  });
-  close = element.create("div", {
-    "class": "ged-popover-close"
-  });
-  close.innerHTML = "&times;";
-  base.appendChild(close);
-  close.addEventListener("click", function() {
-    return popover.replace();
-  });
-  title = element.create("h1");
-  title.innerText = search;
-  base.appendChild(title);
-  _ref = tree.sections;
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    section = _ref[_i];
-    sectionDiv = element.create("div");
-    base.appendChild(sectionDiv);
-    sectionTitle = element.create("h2");
-    sectionTitle.innerText = section.name;
-    sectionDiv.appendChild(sectionTitle);
-    defTable = element.create("table");
-    sectionDiv.appendChild(defTable);
-    _ref1 = section.definitions;
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      definition = _ref1[_j];
-      defRow = element.create("tr");
-      defTable.appendChild(defRow);
-      _ref2 = definition.langs;
-      for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-        lang = _ref2[_k];
-        cell = element.create("td");
-        cell.innerText = lang.text;
-        defRow.appendChild(cell);
+  var base, section;
+  base = element.create({
+    attrs: {
+      "class": "ged-popover-content"
+    },
+    children: [
+      {
+        tag: "form",
+        children: [
+          {
+            tag: "input"
+          }, {
+            tag: "button",
+            text: "Search",
+            attrs: {
+              type: "submit"
+            }
+          }
+        ],
+        events: [
+          {
+            type: "submit",
+            handler: function(event) {
+              popover.create(searchBar.value);
+              if (typeof event.preventDefault === "function") {
+                event.preventDefault();
+              }
+              return false;
+            }
+          }
+        ]
+      }, {
+        attrs: {
+          "class": "ged-popover-close"
+        },
+        html: "&times;",
+        events: [
+          {
+            type: "click",
+            handler: function() {
+              return popover.replace();
+            }
+          }
+        ]
+      }, {
+        tag: "h1",
+        text: search
+      }, {
+        children: (function() {
+          var _i, _len, _ref, _results;
+          _ref = tree.sections;
+          _results = [];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            section = _ref[_i];
+            _results.push((function(section) {
+              var definition;
+              return {
+                children: [
+                  {
+                    tag: "h2",
+                    text: section.name
+                  }, {
+                    tag: "table",
+                    children: (function() {
+                      var _j, _len1, _ref1, _results1;
+                      _ref1 = section.definitions;
+                      _results1 = [];
+                      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+                        definition = _ref1[_j];
+                        _results1.push((function(definition) {
+                          var lang;
+                          return {
+                            tag: "tr",
+                            children: (function() {
+                              var _k, _len2, _ref2, _results2;
+                              _ref2 = definition.langs;
+                              _results2 = [];
+                              for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+                                lang = _ref2[_k];
+                                _results2.push((function(lang) {
+                                  return {
+                                    tag: "td",
+                                    text: lang.text
+                                  };
+                                })(lang));
+                              }
+                              return _results2;
+                            })()
+                          };
+                        })(definition));
+                      }
+                      return _results1;
+                    })()
+                  }
+                ]
+              };
+            })(section));
+          }
+          return _results;
+        })()
       }
-    }
-  }
+    ]
+  });
   return base;
 };
 
@@ -114,11 +179,13 @@ module.exports = popover = {
     var div, height, url, width;
     width = 600;
     height = 800;
-    div = element.create("div", {
-      "class": "ged-popover"
+    div = element.create({
+      attrs: {
+        "class": "ged-popover"
+      },
+      text: "LOADING..."
     });
     url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
-    div.innerText = "LOADING...";
     this.replace(div);
     return request(url).then(function(res) {
       var spec, tree, xml;

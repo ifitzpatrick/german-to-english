@@ -1,14 +1,31 @@
 .ged-popover
-  position:   fixed
-  left:       100px
-  top:        100px
-  bottom:     100px
-  right:      100px
-  background: #73afb6
-  color:      #eefcff
-  overflow-y: auto
-  z-index:    9999
-  border:     solid #2b2301 1px
+  position:    fixed
+  left:        100px
+  top:         100px
+  bottom:      100px
+  right:       100px
+  background:  #73afb6
+  color:       #eefcff
+  overflow-y:  auto
+  z-index:     9999
+  border:      solid #2b2301 1px
+  line-height: 1.5
+
+  h1
+    font-size: 3em
+
+  h2
+    font-size: 2em
+
+  button
+    padding:     2px
+    border:      solid black 1px
+    background:  #eee
+    margin-left: 10px
+    cursor:      pointer
+
+    &:hover
+      background: #aaa
 
 .ged-popover-content
   font-family: Helvetica
@@ -23,7 +40,7 @@
   position:  absolute
   width:     20px
   height:    20px
-  top:       10px
+  top:       0px
   right:     10px
   font-size: 2em
   cursor:    pointer

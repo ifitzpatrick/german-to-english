@@ -9,6 +9,23 @@
   overflow-y: auto;
   z-index: 9999;
   border: solid #2b2301 1px;
+  line-height: 1.5;
+}
+.ged-popover h1 {
+  font-size: 3em;
+}
+.ged-popover h2 {
+  font-size: 2em;
+}
+.ged-popover button {
+  padding: 2px;
+  border: solid #000 1px;
+  background: #eee;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.ged-popover button:hover {
+  background: #aaa;
 }
 .ged-popover-content {
   font-family: Helvetica;
@@ -23,7 +40,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  top: 10px;
+  top: 0px;
   right: 10px;
   font-size: 2em;
   cursor: pointer;

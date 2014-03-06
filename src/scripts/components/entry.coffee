@@ -16,12 +16,18 @@ module.exports = (search, tree) ->
           text: section.name
         ,
           tag: "table"
+          attrs:
+            class: "ged-popover-entry-table"
+
           children: (for definition in section.definitions
             do (definition) ->
               tag: "tr"
               children: (for lang in definition.langs
                 do (lang) ->
                   tag: "td"
+                  attrs:
+                    class: "ged-popover-entry-cell"
+
                   text: lang.text
               )
           )

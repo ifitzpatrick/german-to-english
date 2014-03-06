@@ -126,6 +126,9 @@ module.exports = function(search, tree) {
                     text: section.name
                   }, {
                     tag: "table",
+                    attrs: {
+                      "class": "ged-popover-entry-table"
+                    },
                     children: (function() {
                       var _j, _len1, _ref1, _results1;
                       _ref1 = section.definitions;
@@ -145,6 +148,9 @@ module.exports = function(search, tree) {
                                 _results2.push((function(lang) {
                                   return {
                                     tag: "td",
+                                    attrs: {
+                                      "class": "ged-popover-entry-cell"
+                                    },
                                     text: lang.text
                                   };
                                 })(lang));

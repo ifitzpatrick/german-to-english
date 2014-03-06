@@ -5,7 +5,7 @@ darkish       = #555
 lightish      = #eee
 btn-yellowish = hsl(70, 15%, 90%)
 
-.ged-popover
+body .ged-popover
   position:    fixed
   left:        100px
   top:         100px
@@ -21,15 +21,9 @@ btn-yellowish = hsl(70, 15%, 90%)
   text-align:  left
 
   *
-    box-sizing: border-box
+    box-sizing:    border-box
 
-  h1
-    font-size:     3em
-    border-bottom: solid darkish 1px
-    width:         50%
-
-  h2
-    font-size: 2em
+    line-height: 1.5
 
   form
     width:      100%
@@ -68,17 +62,38 @@ btn-yellowish = hsl(70, 15%, 90%)
   button, input, td
     font-size: 1em
 
-.ged-popover-content
-  font-family: Helvetica
-  padding:     20px
+  .ged-popover-content
+    font-family: Helvetica
+    padding:     20px
 
-  td
-    padding-top:    2px
-    padding-right:  10px
-    padding-bottom: 2px
+    h1, h2, h3
+      margin:       0px 0px 0px 0px
 
-    &:first-child
-      padding-right: 50px
+    h2, h3
+      border-bottom-width: 0px
+    ///////////////
+
+    h1
+      font-size:     3em
+      border-bottom: solid darkish 1px
+      width:         50%
+
+    h2
+      font-size: 2em
+
+
+    table.ged-popover-entry-table, td.ged-popover-entry-cell
+      border-width: 0px
+      margin:       0px 0px 0px 0px
+
+    td
+      padding-top:    2px
+      padding-right:  10px
+      padding-bottom: 2px
+      padding-left:   0px
+
+      &:first-child
+        padding-right: 50px
 
 .ged-popover-close
   font-size: 2em

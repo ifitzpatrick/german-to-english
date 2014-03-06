@@ -1,4 +1,4 @@
-.ged-popover {
+body .ged-popover {
   position: fixed;
   left: 100px;
   top: 100px;
@@ -13,69 +13,85 @@
   min-width: 490px;
   text-align: left;
 }
-.ged-popover * {
+body .ged-popover * {
   box-sizing: border-box;
+  line-height: 1.5;
 }
-.ged-popover h1 {
-  font-size: 3em;
-  border-bottom: solid #555 1px;
-  width: 50%;
-}
-.ged-popover h2 {
-  font-size: 2em;
-}
-.ged-popover form {
+body .ged-popover form {
   width: 100%;
   background: #555;
   color: #eee;
   height: 55px;
 }
-.ged-popover canvas,
-.ged-popover button,
-.ged-popover input {
+body .ged-popover canvas,
+body .ged-popover button,
+body .ged-popover input {
   float: left;
 }
-.ged-popover canvas {
+body .ged-popover canvas {
   margin: 15px;
   cursor: pointer;
 }
-.ged-popover button,
-.ged-popover input {
+body .ged-popover button,
+body .ged-popover input {
   background: #eee;
   color: #555;
   padding: 5px 15px;
   margin: 15px;
 }
-.ged-popover input {
+body .ged-popover input {
   border-radius: 15px;
   outline: none;
   border: solid #000 1px;
   width: 200px;
 }
-.ged-popover button {
+body .ged-popover button {
   border: solid #000 1px;
   background: #eee;
   margin-left: 10px;
   cursor: pointer;
 }
-.ged-popover button:hover {
+body .ged-popover button:hover {
   background: #bbb;
 }
-.ged-popover button,
-.ged-popover input,
-.ged-popover td {
+body .ged-popover button,
+body .ged-popover input,
+body .ged-popover td {
   font-size: 1em;
 }
-.ged-popover-content {
+body .ged-popover .ged-popover-content {
   font-family: Helvetica;
   padding: 20px;
 }
-.ged-popover-content td {
+body .ged-popover .ged-popover-content h1,
+body .ged-popover .ged-popover-content h2,
+body .ged-popover .ged-popover-content h3 {
+  margin: 0px 0px 0px 0px;
+}
+body .ged-popover .ged-popover-content h2,
+body .ged-popover .ged-popover-content h3 {
+  border-bottom-width: 0px;
+}
+body .ged-popover .ged-popover-content h1 {
+  font-size: 3em;
+  border-bottom: solid #555 1px;
+  width: 50%;
+}
+body .ged-popover .ged-popover-content h2 {
+  font-size: 2em;
+}
+body .ged-popover .ged-popover-content table.ged-popover-entry-table,
+body .ged-popover .ged-popover-content td.ged-popover-entry-cell {
+  border-width: 0px;
+  margin: 0px 0px 0px 0px;
+}
+body .ged-popover .ged-popover-content td {
   padding-top: 2px;
   padding-right: 10px;
   padding-bottom: 2px;
+  padding-left: 0px;
 }
-.ged-popover-content td:first-child {
+body .ged-popover .ged-popover-content td:first-child {
   padding-right: 50px;
 }
 .ged-popover-close {

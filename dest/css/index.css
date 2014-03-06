@@ -11,6 +11,7 @@
   font-size: 11pt;
   overflow-y: auto;
   min-width: 490px;
+  text-align: left;
 }
 .ged-popover * {
   box-sizing: border-box;
@@ -58,6 +59,11 @@
 }
 .ged-popover button:hover {
   background: #bbb;
+}
+.ged-popover button,
+.ged-popover input,
+.ged-popover td {
+  font-size: 1em;
 }
 .ged-popover-content {
   font-family: Helvetica;

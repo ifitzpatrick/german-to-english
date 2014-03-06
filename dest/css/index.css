@@ -30,6 +30,8 @@ body .ged-popover input {
 }
 body .ged-popover canvas {
   margin: 15px;
+  margin-left: 12px;
+  margin-top: 17px;
   cursor: pointer;
 }
 body .ged-popover button,
@@ -38,12 +40,15 @@ body .ged-popover input {
   color: #555;
   padding: 5px 15px;
   margin: 15px;
+  margin-top: 10px;
 }
 body .ged-popover input {
   border-radius: 15px;
   outline: none;
   border: solid #000 1px;
   width: 200px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 body .ged-popover button {
   border: solid #000 1px;
@@ -95,7 +100,7 @@ body .ged-popover .ged-popover-content td:first-child {
   padding-right: 50px;
 }
 .ged-popover-close {
-  font-size: 2em;
+  font-size: 20pt;
   cursor: pointer;
   display: inline-block;
   position: absolute;

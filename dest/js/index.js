@@ -288,17 +288,26 @@ module.exports = {
 
 
 },{}],5:[function(require,module,exports){
-var popover;
+var openPopover, popover;
 
 popover = require("./popover");
 
-document.addEventListener("keydown", function(event) {
-  var node, selection, text;
+openPopover = function() {
+  var selection, text;
   selection = document.getSelection();
-  if (event.which === 71 && event.altKey && selection) {
-    node = selection.anchorNode.parentElement;
-    text = selection.toString();
-    return popover.create(text);
+  text = selection.toString();
+  return popover.create(text);
+};
+
+chrome.extension.onMessage.addListener(function(message, sender, callback) {
+  if (message.action === "open-german-english-dictionary") {
+    return openPopover();
+  }
+});
+
+document.addEventListener("keydown", function(event) {
+  if (event.which === 71 && event.altKey) {
+    return openPopover();
   } else if (event.which === 27) {
     return popover.replace();
   }
@@ -350,6 +359,9 @@ module.exports = popover = {
   },
   create: function(search) {
     var div, loading, url;
+    if (search == null) {
+      search = "";
+    }
     this.currentHeader = header(this);
     div = element.create({
       attrs: {

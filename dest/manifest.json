@@ -10,5 +10,8 @@
     "js":      ["js/index.js"],
     "css":     ["css/index.css"]
   }],
-  "permissions": ["webRequest"]
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "permissions": ["webRequest", "contextMenus", "tabs"]
 }

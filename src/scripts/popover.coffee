@@ -27,7 +27,7 @@ module.exports = popover =
       @marker++
       @refresh()
 
-  create: (search) ->
+  create: (search="") ->
     @currentHeader = header this
     div           = element.create
       attrs:

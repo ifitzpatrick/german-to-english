@@ -50,6 +50,7 @@
   border-radius: 15px;
   outline: none;
   border: solid #000 1px;
+  width: 200px;
 }
 .ged-popover button {
   border: solid #000 1px;

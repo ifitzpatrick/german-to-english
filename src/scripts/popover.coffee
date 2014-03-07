@@ -10,7 +10,7 @@ module.exports = popover =
     element.create entry(search, tree)
 
   refresh: ->
-    @entry.remove()
+    @entry?.remove()
     @entry = @previous[@marker]
     @current.appendChild @entry
     @currentHeader.update @canBack(), @canForward()
@@ -29,7 +29,7 @@ module.exports = popover =
 
   create: (search="") ->
     @currentHeader = header this
-    div           = element.create
+    div            = element.create
       attrs:
         class: "ged-popover"
 
@@ -37,50 +37,58 @@ module.exports = popover =
         @currentHeader
       ]
 
-    loading = element.create
-      text: "LOADING..."
-
-    div.appendChild loading
-
-    url =
-      "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"
-
     @replace div
 
-    request(url).then (res) =>
-      xml = res.responseText
-      spec =
-        name: "sections"
-        selector: "section"
-        attrs:
-          name: "sctTitle"
+    if not search and not @previous.length
+      div.appendChild element.create
+        text: "Type searches into search bar above, or select a word and right click"
 
-        children: [
-          name: "definitions"
-          selector: "entry"
+    else if not search
+      @refresh()
+
+    else
+      loading = element.create
+        text: "LOADING..."
+
+      div.appendChild loading
+
+      url =
+        "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=#{search}"
+
+      request(url).then (res) =>
+        xml = res.responseText
+        spec =
+          name: "sections"
+          selector: "section"
+          attrs:
+            name: "sctTitle"
+
           children: [
-            name: "langs"
-            selector: "side"
-            attrs:
-              lang: "lang"
+            name: "definitions"
+            selector: "entry"
+            children: [
+              name: "langs"
+              selector: "side"
+              attrs:
+                lang: "lang"
 
-            text: true
+              text: true
+            ]
           ]
-        ]
 
-      tree = xmlToJson xml, spec
+        tree = xmlToJson xml, spec
 
-      loading.remove()
+        loading.remove()
 
-      @entry = @buildEntry(search, tree)
-      @previous.unshift @entry
-      @marker = 0
-      div.appendChild @entry
-      @currentHeader.update @canBack(), @canForward()
+        @entry = @buildEntry(search, tree)
+        @previous.unshift @entry
+        @marker = 0
+        div.appendChild @entry
+        @currentHeader.update @canBack(), @canForward()
 
-    , ->
-      loading.remove()
-      div.appendChild element.create text: "ERROR"
+      , ->
+        loading.remove()
+        div.appendChild element.create text: "ERROR"
 
   replace: (newPopover = null) ->
     body = $("body")[0]

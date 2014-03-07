@@ -340,7 +340,10 @@ module.exports = popover = {
     return element.create(entry(search, tree));
   },
   refresh: function() {
-    this.entry.remove();
+    var _ref;
+    if ((_ref = this.entry) != null) {
+      _ref.remove();
+    }
     this.entry = this.previous[this.marker];
     this.current.appendChild(this.entry);
     return this.currentHeader.update(this.canBack(), this.canForward());
@@ -375,53 +378,61 @@ module.exports = popover = {
       },
       children: [this.currentHeader]
     });
-    loading = element.create({
-      text: "LOADING..."
-    });
-    div.appendChild(loading);
-    url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
     this.replace(div);
-    return request(url).then((function(_this) {
-      return function(res) {
-        var spec, tree, xml;
-        xml = res.responseText;
-        spec = {
-          name: "sections",
-          selector: "section",
-          attrs: {
-            name: "sctTitle"
-          },
-          children: [
-            {
-              name: "definitions",
-              selector: "entry",
-              children: [
-                {
-                  name: "langs",
-                  selector: "side",
-                  attrs: {
-                    lang: "lang"
-                  },
-                  text: true
-                }
-              ]
-            }
-          ]
-        };
-        tree = xmlToJson(xml, spec);
-        loading.remove();
-        _this.entry = _this.buildEntry(search, tree);
-        _this.previous.unshift(_this.entry);
-        _this.marker = 0;
-        div.appendChild(_this.entry);
-        return _this.currentHeader.update(_this.canBack(), _this.canForward());
-      };
-    })(this), function() {
-      loading.remove();
+    if (!search && !this.previous.length) {
       return div.appendChild(element.create({
-        text: "ERROR"
+        text: "Type searches into search bar above, or select a word and right click"
       }));
-    });
+    } else if (!search) {
+      return this.refresh();
+    } else {
+      loading = element.create({
+        text: "LOADING..."
+      });
+      div.appendChild(loading);
+      url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + search;
+      return request(url).then((function(_this) {
+        return function(res) {
+          var spec, tree, xml;
+          xml = res.responseText;
+          spec = {
+            name: "sections",
+            selector: "section",
+            attrs: {
+              name: "sctTitle"
+            },
+            children: [
+              {
+                name: "definitions",
+                selector: "entry",
+                children: [
+                  {
+                    name: "langs",
+                    selector: "side",
+                    attrs: {
+                      lang: "lang"
+                    },
+                    text: true
+                  }
+                ]
+              }
+            ]
+          };
+          tree = xmlToJson(xml, spec);
+          loading.remove();
+          _this.entry = _this.buildEntry(search, tree);
+          _this.previous.unshift(_this.entry);
+          _this.marker = 0;
+          div.appendChild(_this.entry);
+          return _this.currentHeader.update(_this.canBack(), _this.canForward());
+        };
+      })(this), function() {
+        loading.remove();
+        return div.appendChild(element.create({
+          text: "ERROR"
+        }));
+      });
+    }
   },
   replace: function(newPopover) {
     var body;

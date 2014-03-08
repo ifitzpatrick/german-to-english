@@ -55,6 +55,10 @@ body .ged-popover button {
   background: #eee;
   margin-left: 10px;
   cursor: pointer;
+  border-radius: 0px;
+  box-shadow: none;
+  height: auto;
+  font-weight: bold;
 }
 body .ged-popover button:hover {
   background: #bbb;

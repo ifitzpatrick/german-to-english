@@ -1,1 +1,23 @@
-.ged-popover(ng-controller="RootCtrl", ng-hide="showPopover", ng-cloak)
+.ged-popover(ng-controller="RootCtrl", ng-show="popoverIsVisible", ng-cloak)
+  form(ng-submit="search(nextSearchTerm)")
+    arrow(active="canBack()", ng-click="back()")
+    arrow(active="canForward()", reverse="true", ng-click="forward()")
+    input(name="searchBar", ng-model="nextSearchTerm")
+    button(type="submit") Search
+    .ged-popover-close(ng-click="close()") &times;
+
+  .ged-popover-content(ng-hide="loading")
+    h1 {{searchTerm}}
+    .ged-popover-section(
+      ng-show="hasDefinitions()"
+      ng-repeat="section in tree.sections"
+    )
+      h2 {{section.name}}
+      table.ged-popover-entry-table
+        tr(ng-repeat="definition in section.definitions")
+          td.ged-popover-entry-cell(
+            ng-repeat="lang in definition.langs"
+          ) {{lang.text}}
+
+  .ged-popover-content(ng-show="loading") LOADING...
+

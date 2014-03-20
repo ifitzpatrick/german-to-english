@@ -1,24 +1,25 @@
 gulp       = require "gulp"
+coffee     = require "gulp-coffee"
 concat     = require "gulp-concat"
-browserify = require "gulp-browserify"
 stylus     = require "gulp-stylus"
+jade       = require "gulp-jade"
 
-gulp.task "default", ->
+build = ->
   # Popover js
-  gulp.src(["src/scripts/main.coffee"], read: false)
-    .pipe(browserify(
-      transform:  ["coffeeify"],
-      extensions: [".coffee"]
-    ))
+  gulp.src([
+    "src/scripts/module.coffee",
+    "src/scripts/services/**/*.coffee",
+    "src/scripts/controllers/**/*.coffee",
+    "src/scripts/directives/**/*.coffee",
+    "src/scripts/main.coffee"
+  ])
+    .pipe(coffee())
     .pipe(concat "js/index.js")
     .pipe(gulp.dest("dest"))
 
   # Background script handles right click context menu
-  gulp.src(["src/scripts/background.coffee"], read: false)
-    .pipe(browserify(
-      transform:  ["coffeeify"],
-      extensions: [".coffee"]
-    ))
+  gulp.src(["src/scripts/background.coffee"])
+    .pipe(coffee())
     .pipe(concat "js/background.js")
     .pipe(gulp.dest("dest"))
 
@@ -39,3 +40,8 @@ gulp.task "default", ->
     .pipe(concat "js/templates.js")
     .pipe(gulp.dest("dest"))
 
+gulp.task "default", -> build()
+
+
+gulp.task "watch", ->
+  gulp.watch(["src/**/*"], ["default"])

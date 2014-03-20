@@ -15,8 +15,9 @@ nodeToJSON = (dom, nodeSpec, tree = {}) ->
 
   return tree
 
-module.exports = (xml, spec) ->
-  parser = new DOMParser
-  dom = parser.parseFromString xml, "application/xml"
-  nodeToJSON dom, spec
+Dict.factory "xmlToJson", ->
+  (xml, spec) ->
+    parser = new DOMParser
+    dom = parser.parseFromString xml, "application/xml"
+    nodeToJSON dom, spec
 

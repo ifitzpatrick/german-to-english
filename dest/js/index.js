@@ -134,6 +134,13 @@
 }).call(this);
 
 (function() {
+  Dict.controller("OptionsCtrl", function($scope) {
+    return $scope.lol = "OMG";
+  });
+
+}).call(this);
+
+(function() {
   Dict.controller("RootCtrl", function($scope, chromeMessage, keydown, getSelection, search) {
     $scope.reset = function() {
       $scope.searchTerm = "";

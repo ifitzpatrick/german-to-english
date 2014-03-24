@@ -17,6 +17,18 @@ build = ->
     .pipe(concat "js/index.js")
     .pipe(gulp.dest("dest"))
 
+  # Options js
+  gulp.src([
+    "src/scripts/module.coffee",
+    "src/scripts/services/**/*.coffee",
+    "src/scripts/controllers/**/*.coffee",
+    "src/scripts/directives/**/*.coffee",
+    "src/scripts/options.coffee"
+  ])
+    .pipe(coffee())
+    .pipe(concat "js/index.js")
+    .pipe(gulp.dest("dest"))
+
   # Background script handles right click context menu
   gulp.src(["src/scripts/background.coffee"])
     .pipe(coffee())
@@ -38,6 +50,12 @@ build = ->
   gulp.src(["src/templates/popover.jade"])
     .pipe(jade client: true)
     .pipe(concat "js/templates.js")
+    .pipe(gulp.dest("dest"))
+
+  # Options template
+  gulp.src(["src/templates/options.jade"])
+    .pipe(jade())
+    .pipe(concat "options.html")
     .pipe(gulp.dest("dest"))
 
 gulp.task "default", -> build()

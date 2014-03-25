@@ -219,6 +219,9 @@
         return $scope.refresh();
       }
     };
+    $scope.close = function() {
+      return $scope.showPopover(false);
+    };
     chromeMessage.listen(function() {
       return $scope.showPopover(true);
     });
@@ -293,9 +296,10 @@
 }).call(this);
 
 (function() {
-  var $, e;
 
-  $ = function(query) {
+
+}).call(this);
+= function(query) {
     return document.querySelectorAll(query);
   };
 

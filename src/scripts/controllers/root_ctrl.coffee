@@ -59,9 +59,12 @@ Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, searc
     $scope.marker < $scope.previous.length - 1
 
   $scope.back = ->
-     if $scope.canBack()
-       $scope.marker++
-       $scope.refresh()
+    if $scope.canBack()
+      $scope.marker++
+      $scope.refresh()
+
+  $scope.close = ->
+    $scope.showPopover false
 
   chromeMessage.listen ->
     $scope.showPopover true

@@ -26,7 +26,7 @@ build = ->
     "src/scripts/options.coffee"
   ])
     .pipe(coffee())
-    .pipe(concat "js/index.js")
+    .pipe(concat "js/options.js")
     .pipe(gulp.dest("dest"))
 
   # Background script handles right click context menu

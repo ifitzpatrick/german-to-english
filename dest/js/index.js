@@ -296,10 +296,9 @@
 }).call(this);
 
 (function() {
+  var $, e;
 
-
-}).call(this);
-= function(query) {
+  $ = function(query) {
     return document.querySelectorAll(query);
   };
 

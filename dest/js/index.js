@@ -9,8 +9,15 @@
       listen: function(fn) {
         return chrome.extension.onMessage.addListener(function(message, sender, callback) {
           if (message.action === "open-german-english-dictionary") {
+            $rootScope.$apply(function() {
+              console.log("omg");
+              return fn("german");
+            });
+          }
+          if (message.action === "open-spanish-english-dictionary") {
             return $rootScope.$apply(function() {
-              return fn();
+              console.log("lol");
+              return fn("spanish");
             });
           }
         });
@@ -46,7 +53,21 @@
 }).call(this);
 
 (function() {
-  Dict.factory("search", function($http, xmlToJson) {
+  Dict.factory("search", function(searchGerman, searchSpanish) {
+    return function(searchTerm, language) {
+      var dictionaries;
+      dictionaries = {
+        german: searchGerman,
+        spanish: searchSpanish
+      };
+      return dictionaries[language](searchTerm);
+    };
+  });
+
+}).call(this);
+
+(function() {
+  Dict.factory("searchGerman", function($http, xmlToJson) {
     return function(searchTerm) {
       var url;
       url = "http://dict.leo.org/dictQuery/m-vocab/ende/query.xml?search=" + searchTerm;
@@ -57,6 +78,47 @@
           spec = {
             name: "sections",
             selector: "section",
+            attrs: {
+              name: "sctTitle"
+            },
+            children: [
+              {
+                name: "definitions",
+                selector: "entry",
+                children: [
+                  {
+                    name: "langs",
+                    selector: "side",
+                    attrs: {
+                      lang: "lang"
+                    },
+                    text: true
+                  }
+                ]
+              }
+            ]
+          };
+          return xmlToJson(xml, spec);
+        };
+      })(this));
+    };
+  });
+
+}).call(this);
+
+(function() {
+  Dict.factory("searchSpanish", function($http, xmlToJson) {
+    return function(searchTerm) {
+      var apiKey, url;
+      apiKey = "f70c5487-e263-407d-8f7a-9b3144e1ef82";
+      url = "http://www.dictionaryapi.com/api/v1/references/spanish/xml/" + (searchTerm.toLocaleLowerCase()) + "?key=" + apiKey;
+      return $http.get(url).then((function(_this) {
+        return function(res) {
+          var spec, xml;
+          xml = res.data;
+          spec = {
+            name: "sections",
+            selector: "entry",
             attrs: {
               name: "sctTitle"
             },
@@ -151,7 +213,8 @@
         sections: []
       };
       $scope.popoverIsVisible = false;
-      return $scope.loading = false;
+      $scope.loading = false;
+      return $scope.language = "german";
     };
     $scope.reset();
     $scope.refresh = function() {
@@ -186,7 +249,7 @@
     $scope.search = function(searchTerm) {
       $scope.loading = true;
       $scope.searchTerm = searchTerm;
-      return search(searchTerm).then(function(tree) {
+      return search(searchTerm, $scope.language).then(function(tree) {
         $scope.previous.unshift({
           searchTerm: searchTerm,
           tree: tree
@@ -222,7 +285,12 @@
     $scope.close = function() {
       return $scope.showPopover(false);
     };
-    chromeMessage.listen(function() {
+    chromeMessage.listen(function(language) {
+      if (language == null) {
+        language = "german";
+      }
+      console.log(language);
+      $scope.language = language;
       return $scope.showPopover(true);
     });
     return keydown.listen(function(event) {

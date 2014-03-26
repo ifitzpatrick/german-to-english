@@ -7,6 +7,7 @@ Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, searc
     $scope.tree             = {sections: []}
     $scope.popoverIsVisible = false
     $scope.loading          = false
+    $scope.language         = "german"
 
   $scope.reset()
 
@@ -35,7 +36,7 @@ Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, searc
     $scope.loading    = true
     $scope.searchTerm = searchTerm
 
-    search(searchTerm).then (tree) ->
+    search(searchTerm, $scope.language).then (tree) ->
       $scope.previous.unshift {searchTerm, tree}
       $scope.tree    = tree
       $scope.loading = false
@@ -66,7 +67,9 @@ Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, searc
   $scope.close = ->
     $scope.showPopover false
 
-  chromeMessage.listen ->
+  chromeMessage.listen (language="german")->
+    console.log language
+    $scope.language = language
     $scope.showPopover true
 
   keydown.listen (event) ->

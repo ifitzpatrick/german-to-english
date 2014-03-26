@@ -192,7 +192,8 @@
           tree: tree
         });
         $scope.tree = tree;
-        return $scope.loading = false;
+        $scope.loading = false;
+        return $scope.marker = 0;
       }, function(error) {
         return $scope.loading = false;
       });

@@ -193,7 +193,8 @@
         });
         $scope.tree = tree;
         $scope.loading = false;
-        return $scope.marker = 0;
+        $scope.marker = 0;
+        return $scope.nextSearchTerm = "";
       }, function(error) {
         return $scope.loading = false;
       });

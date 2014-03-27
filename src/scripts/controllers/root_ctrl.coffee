@@ -37,9 +37,10 @@ Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, searc
 
     search(searchTerm).then (tree) ->
       $scope.previous.unshift {searchTerm, tree}
-      $scope.tree    = tree
-      $scope.loading = false
-      $scope.marker  = 0
+      $scope.tree           = tree
+      $scope.loading        = false
+      $scope.marker         = 0
+      $scope.nextSearchTerm = ""
 
     , (error) ->
       $scope.loading = false

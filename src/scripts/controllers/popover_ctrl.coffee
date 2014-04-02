@@ -1,4 +1,4 @@
-Dict.controller "RootCtrl", ($scope, chromeMessage, keydown, getSelection, search) ->
+Dict.controller "PopoverCtrl", ($scope, chromeMessage, keydown, getSelection, search) ->
   $scope.reset = ->
     $scope.searchTerm       = ""
     $scope.nextSearchTerm   = ""

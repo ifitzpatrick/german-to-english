@@ -1,4 +1,4 @@
-.ged-popover(ng-controller="RootCtrl", ng-show="popoverIsVisible", ng-cloak)
+.ged-popover(ng-controller="PopoverCtrl", ng-show="popoverIsVisible", ng-cloak)
   form(ng-submit="search(nextSearchTerm)")
     arrow(active="canBack()", ng-click="back()")
     arrow(active="canForward()", reverse="true", ng-click="forward()")
